@@ -18,14 +18,23 @@ package main
 
 import (
 	// The set of controllers this controller process runs.
+	"github.com/tektoncd/operator/pkg/reconciler/openshift/openshiftplatform"
+	"github.com/tektoncd/operator/pkg/reconciler/platform"
 	"github.com/vdemeester/opimpeccable/pkg/reconciler/simpledeployment"
 
 	// This defines the shared main for injected controllers.
+	"knative.dev/pkg/injection"
 	"knative.dev/pkg/injection/sharedmain"
 )
 
 func main() {
-	sharedmain.Main("controller",
+	pConfig := platform.NewConfigFromFlags()
+	p := openshiftplatform.NewOpenShiftPlatform(pConfig)
+	controllers := []injection.ControllerConstructor{
 		simpledeployment.NewController,
-	)
+	}
+	for _, c := range p.AllSupportedControllers() {
+		controllers = append(controllers, c.ControllerConstructor)
+	}
+	sharedmain.Main("controller", controllers...)
 }

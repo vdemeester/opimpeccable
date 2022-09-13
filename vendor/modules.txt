@@ -43,8 +43,6 @@ github.com/evanphx/json-patch
 # github.com/evanphx/json-patch/v5 v5.6.0
 ## explicit; go 1.12
 github.com/evanphx/json-patch/v5
-# github.com/fsnotify/fsnotify v1.5.1
-## explicit; go 1.13
 # github.com/go-kit/log v0.1.0
 ## explicit; go 1.16
 github.com/go-kit/log
@@ -55,6 +53,9 @@ github.com/go-logfmt/logfmt
 # github.com/go-logr/logr v1.2.3
 ## explicit; go 1.16
 github.com/go-logr/logr
+# github.com/go-logr/zapr v1.2.3
+## explicit; go 1.16
+github.com/go-logr/zapr
 # github.com/go-openapi/jsonpointer v0.19.5
 ## explicit; go 1.13
 github.com/go-openapi/jsonpointer
@@ -135,6 +136,16 @@ github.com/kelseyhightower/envconfig
 github.com/mailru/easyjson/buffer
 github.com/mailru/easyjson/jlexer
 github.com/mailru/easyjson/jwriter
+# github.com/manifestival/client-go-client v0.5.0
+## explicit; go 1.15
+github.com/manifestival/client-go-client
+github.com/manifestival/client-go-client/pkg/dynamic
+# github.com/manifestival/manifestival v0.7.1
+## explicit; go 1.15
+github.com/manifestival/manifestival
+github.com/manifestival/manifestival/internal/overlay
+github.com/manifestival/manifestival/internal/patch
+github.com/manifestival/manifestival/internal/sources
 # github.com/matttproud/golang_protobuf_extensions v1.0.2-0.20181231171920-c182affec369
 ## explicit; go 1.9
 github.com/matttproud/golang_protobuf_extensions/pbutil
@@ -147,6 +158,13 @@ github.com/modern-go/reflect2
 # github.com/munnerz/goautoneg v0.0.0-20191010083416-a7dc8b61c822
 ## explicit
 github.com/munnerz/goautoneg
+# github.com/openshift/api v0.0.0-20210910062324-a41d3573a3ba
+## explicit; go 1.16
+github.com/openshift/api/console/v1
+github.com/openshift/api/route/v1
+# github.com/openshift/client-go v0.0.0-20210521082421-73d9475a9142
+## explicit; go 1.16
+github.com/openshift/client-go/route/clientset/versioned/scheme
 # github.com/pkg/errors v0.9.1
 ## explicit
 github.com/pkg/errors
@@ -178,6 +196,57 @@ github.com/spf13/cobra
 # github.com/spf13/pflag v1.0.5
 ## explicit; go 1.12
 github.com/spf13/pflag
+# github.com/tektoncd/operator v0.61.0
+## explicit; go 1.17
+github.com/tektoncd/operator/pkg/apis/operator/v1alpha1
+github.com/tektoncd/operator/pkg/client/clientset/versioned
+github.com/tektoncd/operator/pkg/client/clientset/versioned/scheme
+github.com/tektoncd/operator/pkg/client/clientset/versioned/typed/operator/v1alpha1
+github.com/tektoncd/operator/pkg/client/informers/externalversions
+github.com/tektoncd/operator/pkg/client/informers/externalversions/internalinterfaces
+github.com/tektoncd/operator/pkg/client/informers/externalversions/operator
+github.com/tektoncd/operator/pkg/client/informers/externalversions/operator/v1alpha1
+github.com/tektoncd/operator/pkg/client/injection/client
+github.com/tektoncd/operator/pkg/client/injection/informers/factory
+github.com/tektoncd/operator/pkg/client/injection/informers/operator/v1alpha1/tektonaddon
+github.com/tektoncd/operator/pkg/client/injection/informers/operator/v1alpha1/tektonchain
+github.com/tektoncd/operator/pkg/client/injection/informers/operator/v1alpha1/tektonconfig
+github.com/tektoncd/operator/pkg/client/injection/informers/operator/v1alpha1/tektonhub
+github.com/tektoncd/operator/pkg/client/injection/informers/operator/v1alpha1/tektoninstallerset
+github.com/tektoncd/operator/pkg/client/injection/informers/operator/v1alpha1/tektonpipeline
+github.com/tektoncd/operator/pkg/client/injection/informers/operator/v1alpha1/tektontrigger
+github.com/tektoncd/operator/pkg/client/injection/reconciler/operator/v1alpha1/tektonaddon
+github.com/tektoncd/operator/pkg/client/injection/reconciler/operator/v1alpha1/tektonchain
+github.com/tektoncd/operator/pkg/client/injection/reconciler/operator/v1alpha1/tektonconfig
+github.com/tektoncd/operator/pkg/client/injection/reconciler/operator/v1alpha1/tektonhub
+github.com/tektoncd/operator/pkg/client/injection/reconciler/operator/v1alpha1/tektoninstallerset
+github.com/tektoncd/operator/pkg/client/injection/reconciler/operator/v1alpha1/tektonpipeline
+github.com/tektoncd/operator/pkg/client/injection/reconciler/operator/v1alpha1/tektontrigger
+github.com/tektoncd/operator/pkg/client/listers/operator/v1alpha1
+github.com/tektoncd/operator/pkg/reconciler/common
+github.com/tektoncd/operator/pkg/reconciler/common/tektoninstallerset
+github.com/tektoncd/operator/pkg/reconciler/kubernetes/tektonchain
+github.com/tektoncd/operator/pkg/reconciler/kubernetes/tektonhub
+github.com/tektoncd/operator/pkg/reconciler/kubernetes/tektoninstallerset
+github.com/tektoncd/operator/pkg/reconciler/kubernetes/tektonpipeline
+github.com/tektoncd/operator/pkg/reconciler/kubernetes/tektontrigger
+github.com/tektoncd/operator/pkg/reconciler/openshift
+github.com/tektoncd/operator/pkg/reconciler/openshift/common
+github.com/tektoncd/operator/pkg/reconciler/openshift/openshiftplatform
+github.com/tektoncd/operator/pkg/reconciler/openshift/tektonaddon
+github.com/tektoncd/operator/pkg/reconciler/openshift/tektonaddon/pipelinetemplates
+github.com/tektoncd/operator/pkg/reconciler/openshift/tektonchain
+github.com/tektoncd/operator/pkg/reconciler/openshift/tektonconfig
+github.com/tektoncd/operator/pkg/reconciler/openshift/tektonconfig/extension
+github.com/tektoncd/operator/pkg/reconciler/openshift/tektonhub
+github.com/tektoncd/operator/pkg/reconciler/openshift/tektonpipeline
+github.com/tektoncd/operator/pkg/reconciler/openshift/tektontrigger
+github.com/tektoncd/operator/pkg/reconciler/platform
+github.com/tektoncd/operator/pkg/reconciler/shared/hash
+github.com/tektoncd/operator/pkg/reconciler/shared/tektonconfig
+github.com/tektoncd/operator/pkg/reconciler/shared/tektonconfig/pipeline
+github.com/tektoncd/operator/pkg/reconciler/shared/tektonconfig/trigger
+github.com/tektoncd/operator/pkg/reconciler/shared/tektoninstallerset
 # go.opencensus.io v0.23.0
 ## explicit; go 1.13
 go.opencensus.io
@@ -490,10 +559,12 @@ k8s.io/apimachinery/pkg/util/errors
 k8s.io/apimachinery/pkg/util/framer
 k8s.io/apimachinery/pkg/util/intstr
 k8s.io/apimachinery/pkg/util/json
+k8s.io/apimachinery/pkg/util/jsonmergepatch
 k8s.io/apimachinery/pkg/util/managedfields
 k8s.io/apimachinery/pkg/util/mergepatch
 k8s.io/apimachinery/pkg/util/naming
 k8s.io/apimachinery/pkg/util/net
+k8s.io/apimachinery/pkg/util/rand
 k8s.io/apimachinery/pkg/util/runtime
 k8s.io/apimachinery/pkg/util/sets
 k8s.io/apimachinery/pkg/util/strategicpatch
@@ -712,6 +783,7 @@ k8s.io/client-go/pkg/version
 k8s.io/client-go/plugin/pkg/client/auth/exec
 k8s.io/client-go/rest
 k8s.io/client-go/rest/watch
+k8s.io/client-go/restmapper
 k8s.io/client-go/testing
 k8s.io/client-go/tools/auth
 k8s.io/client-go/tools/cache
@@ -836,6 +908,8 @@ knative.dev/pkg/changeset
 knative.dev/pkg/client/injection/kube/client
 knative.dev/pkg/client/injection/kube/informers/admissionregistration/v1/mutatingwebhookconfiguration
 knative.dev/pkg/client/injection/kube/informers/admissionregistration/v1/validatingwebhookconfiguration
+knative.dev/pkg/client/injection/kube/informers/apps/v1/deployment
+knative.dev/pkg/client/injection/kube/informers/core/v1/namespace
 knative.dev/pkg/client/injection/kube/informers/core/v1/pod
 knative.dev/pkg/client/injection/kube/informers/factory
 knative.dev/pkg/codegen/cmd/injection-gen
@@ -877,6 +951,9 @@ knative.dev/pkg/webhook/json
 knative.dev/pkg/webhook/resourcesemantics
 knative.dev/pkg/webhook/resourcesemantics/defaulting
 knative.dev/pkg/webhook/resourcesemantics/validation
+# sigs.k8s.io/controller-runtime v0.7.2
+## explicit; go 1.15
+sigs.k8s.io/controller-runtime/pkg/client/apiutil
 # sigs.k8s.io/json v0.0.0-20211208200746-9f7c6b3444d2
 ## explicit; go 1.17
 sigs.k8s.io/json
