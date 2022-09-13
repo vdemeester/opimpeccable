@@ -16,7 +16,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: controller
-  namespace: openshift-pipelines
+  namespace: openshift-operators
   labels:
     operator.openshift-pipelines.org/release: devel
 spec:
@@ -67,7 +67,9 @@ spec:
         - name: CONFIG_OBSERVABILITY_NAME
           value: config-observability
         - name: METRICS_DOMAIN
-          value: knative.dev/samples
+          value: openshift-pipelines.org/operator
+        - name: VERSION
+          value: "devel"
 
         securityContext:
           allowPrivilegeEscalation: false

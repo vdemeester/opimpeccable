@@ -15,7 +15,7 @@
 apiVersion: admissionregistration.k8s.io/v1
 kind: MutatingWebhookConfiguration
 metadata:
-  name: defaulting.webhook.knative-operator.openshift-pipelines.org
+  name: defaulting.webhook.operator.openshift-pipelines.org
   labels:
     operator.openshift-pipelines.org/release: devel
 webhooks:
@@ -24,10 +24,10 @@ webhooks:
   clientConfig:
     service:
       name: webhook
-      namespace: openshift-pipelines
+      namespace: openshift-operators
   failurePolicy: Fail
   sideEffects: None
-  name: defaulting.webhook.knative-operator.openshift-pipelines.org
+  name: defaulting.webhook.operator.openshift-pipelines.org
 ---
 apiVersion: admissionregistration.k8s.io/v1
 kind: ValidatingWebhookConfiguration
@@ -41,15 +41,15 @@ webhooks:
   clientConfig:
     service:
       name: webhook
-      namespace: openshift-pipelines
+      namespace: openshift-operators
   failurePolicy: Fail
   sideEffects: None
-  name: validation.webhook.knative-operator.openshift-pipelines.org
+  name: validation.webhook.operator.openshift-pipelines.org
 ---
 apiVersion: admissionregistration.k8s.io/v1
 kind: ValidatingWebhookConfiguration
 metadata:
-  name: config.webhook.knative-operator.openshift-pipelines.org
+  name: config.webhook.operator.openshift-pipelines.org
   labels:
     serving.knative.dev/release: devel
 webhooks:
@@ -58,10 +58,10 @@ webhooks:
   clientConfig:
     service:
       name: webhook
-      namespace: openshift-pipelines
+      namespace: openshift-operators
   failurePolicy: Fail
   sideEffects: None
-  name: config.webhook.knative-operator.openshift-pipelines.org
+  name: config.webhook.operator.openshift-pipelines.org
   namespaceSelector:
     matchExpressions:
     - key: operator.openshift-pipelines.org/release
@@ -71,7 +71,7 @@ apiVersion: v1
 kind: Secret
 metadata:
   name: webhook-certs
-  namespace: openshift-pipelines
+  namespace: openshift-operators
   labels:
     operator.openshift-pipelines.org/release: devel
 # The data is populated at install time.

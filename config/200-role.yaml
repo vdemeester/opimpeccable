@@ -16,16 +16,120 @@ kind: Role
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
   name: openshift-pipelines-namespace-rbac
-  namespace: openshift-pipelines
+  namespace: openshift-operators
   labels:
     operator.openshift-pipelines.org/release: devel
 rules:
   # Needed to watch and load configuration and secret data.
   - apiGroups: [""]
-    resources: ["configmaps", "secrets"]
-    verbs: ["get", "list", "update", "watch"]
+    resources: ["configmaps", "secrets", "namespaces"]
+    verbs: ["get", "list", "update", "patch", "watch"]
+  - apiGroups: [""]
+    resources: [ "namespaces/finalizers" ]
+    verbs: ["update"]
 
   # This is needed by leader election to run the controller in HA.
   - apiGroups: ["coordination.k8s.io"]
     resources: ["leases"]
     verbs: ["get", "list", "create", "update", "delete", "patch", "watch"]
+
+  - apiGroups:
+    - operator.tekton.dev
+    resources:
+    - '*'
+    - tektonaddons
+    verbs:
+    - get
+    - list
+    - create
+    - update
+    - delete
+    - deletecollection
+    - patch
+    - watch
+  - apiGroups:
+    - tekton.dev
+    resources:
+    - tasks
+    - clustertasks
+    - taskruns
+    - pipelines
+    - pipelineruns
+    - pipelineresources
+    - conditions
+    - tasks/status
+    - clustertasks/status
+    - taskruns/status
+    - pipelines/status
+    - pipelineruns/status
+    - pipelineresources/status
+    - taskruns/finalizers
+    - pipelineruns/finalizers
+    - runs
+    - runs/status
+    - runs/finalizers
+    verbs:
+    - get
+    - list
+    - create
+    - update
+    - delete
+    - deletecollection
+    - patch
+    - watch
+  - apiGroups:
+    - triggers.tekton.dev
+    - operator.tekton.dev
+    resources:
+    - '*'
+    verbs:
+    - add
+    - get
+    - list
+    - create
+    - update
+    - delete
+    - deletecollection
+    - patch
+    - watch
+  - apiGroups:
+    - security.openshift.io
+    resources:
+    - securitycontextconstraints
+    verbs:
+    - use
+  - apiGroups:
+    - apps
+    resources:
+    - deployments
+    - daemonsets
+    - replicasets
+    - statefulsets
+    - deployments/finalizers
+    verbs:
+    - get
+    - list
+    - create
+    - update
+    - delete
+    - deletecollection
+    - patch
+    - watch
+  - apiGroups:
+    - monitoring.coreos.com
+    resources:
+    - servicemonitors
+    verbs:
+    - get
+    - create
+    - delete
+  - apiGroups:
+    - rbac.authorization.k8s.io
+    resources:
+    - clusterroles
+    - roles
+    verbs:
+    - get
+    - create
+    - update
+    - delete

@@ -19,7 +19,7 @@ metadata:
     role: webhook
     operator.openshift-pipelines.org/release: devel
   name: webhook
-  namespace: openshift-pipelines
+  namespace: openshift-operators
 spec:
   ports:
     - port: 443
