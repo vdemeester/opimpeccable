@@ -27,7 +27,6 @@ import (
 	"knative.dev/pkg/logging"
 	"knative.dev/pkg/metrics"
 	"knative.dev/pkg/signals"
-	"knative.dev/pkg/system"
 	"knative.dev/pkg/webhook"
 	"knative.dev/pkg/webhook/certificates"
 	"knative.dev/pkg/webhook/configmaps"
@@ -49,7 +48,7 @@ func NewDefaultingAdmissionController(ctx context.Context, cmw configmap.Watcher
 	return defaulting.NewAdmissionController(ctx,
 
 		// Name of the resource webhook.
-		fmt.Sprintf("defaulting.webhook.%s.openshift-pipelines.org", system.Namespace()),
+		fmt.Sprint("defaulting.webhook.operator.openshift-pipelines.org"),
 
 		// The path on which to serve the webhook.
 		"/defaulting",
@@ -73,7 +72,7 @@ func NewValidationAdmissionController(ctx context.Context, cmw configmap.Watcher
 	return validation.NewAdmissionController(ctx,
 
 		// Name of the resource webhook.
-		fmt.Sprintf("validation.webhook.%s.openshift-pipelines.org", system.Namespace()),
+		fmt.Sprint("validation.webhook.operator.openshift-pipelines.org"),
 
 		// The path on which to serve the webhook.
 		"/resource-validation",
@@ -100,7 +99,7 @@ func NewConfigValidationController(ctx context.Context, cmw configmap.Watcher) *
 	return configmaps.NewAdmissionController(ctx,
 
 		// Name of the configmap webhook.
-		fmt.Sprintf("config.webhook.%s.openshift-pipelines.org", system.Namespace()),
+		fmt.Sprint("config.webhook.operator.openshift-pipelines.org"),
 
 		// The path on which to serve the webhook.
 		"/config-validation",

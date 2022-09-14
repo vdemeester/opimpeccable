@@ -21,7 +21,7 @@ metadata:
 subjects:
   - kind: ServiceAccount
     name: controller
-    namespace: openshift-pipelines
+    namespace: openshift-operators
 roleRef:
   kind: ClusterRole
   name: openshift-pipelines-admin

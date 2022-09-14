@@ -16,7 +16,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: controller
-  namespace: openshift-pipelines
+  namespace: openshift-operators
   labels:
     operator.openshift-pipelines.org/release: devel
 spec:
@@ -62,12 +62,18 @@ spec:
           valueFrom:
             fieldRef:
               fieldPath: metadata.namespace
+        - name: OPERATOR_NAME
+          value: redhat-openshift-pipelines-operator
+        - name: IMAGE_PIPELINES_PROXY
+          value: ko://github.com/vdemeester/opimpeccable/vendor/github.com/tektoncd/operator/cmd/openshift/proxy-webhook
         - name: CONFIG_LOGGING_NAME
           value: config-logging
         - name: CONFIG_OBSERVABILITY_NAME
           value: config-observability
         - name: METRICS_DOMAIN
-          value: knative.dev/samples
+          value: openshift-pipelines.org/operator
+        - name: VERSION
+          value: "devel"
 
         securityContext:
           allowPrivilegeEscalation: false

@@ -16,7 +16,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: config-logging
-  namespace: openshift-pipelines
+  namespace: openshift-operators
   labels:
     operator.openshift-pipelines.org/release: devel
 

@@ -34,4 +34,11 @@ import (
 	_ "k8s.io/code-generator/cmd/lister-gen"
 	_ "k8s.io/kube-openapi/cmd/openapi-gen"
 	_ "knative.dev/pkg/codegen/cmd/injection-gen"
+
+	// operator payload
+	_ "github.com/tektoncd/operator"
+	_ "github.com/tektoncd/operator/hack"
+
+	// Force proxy-webhook import
+	_ "github.com/tektoncd/operator/cmd/openshift/proxy-webhook"
 )
