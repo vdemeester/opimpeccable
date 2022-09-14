@@ -23,7 +23,6 @@ import (
 	"knative.dev/pkg/configmap"
 	"knative.dev/pkg/controller"
 	"knative.dev/pkg/kmeta"
-	"knative.dev/pkg/logging"
 
 	// "github.com/vdemeester/opimpeccable/pkg/apis/operator/v1alpha1"
 	operatorclient "github.com/vdemeester/opimpeccable/pkg/client/injection/client"
@@ -39,13 +38,6 @@ func NewController(
 	ctx context.Context,
 	cmw configmap.Watcher,
 ) *controller.Impl {
-	logger := logging.FromContext(ctx)
-	logger.Infof("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA")
-	logger.Infof("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA")
-	logger.Infof("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA")
-	logger.Infof("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA")
-	logger.Infof("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA")
-	logger.Infof("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA")
 	// Obtain an informer to both the main and child resources. These will be started by
 	// the injection framework automatically. They'll keep a cached representation of the
 	// cluster's state of the respective resource at all times.
@@ -56,7 +48,7 @@ func NewController(
 		kubeclient:     kubeclient.Get(ctx),
 		operatorclient: operatorclient.Get(ctx),
 	}
-	impl := openshiftpipelinesconfigreconciler.NewImpl(ctx, r, func(impl *controller.Impl) controller.Options {
+	impl := openshiftpipelinesconfigreconciler.NewImpl(ctx, r, func(i *controller.Impl) controller.Options {
 		return controller.Options{
 			AgentName: "OpenShiftPipelinesConfig",
 		}

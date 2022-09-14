@@ -36,8 +36,8 @@ type OperatorV1alpha1Client struct {
 	restClient rest.Interface
 }
 
-func (c *OperatorV1alpha1Client) OpenShiftPipelinesConfigs(namespace string) OpenShiftPipelinesConfigInterface {
-	return newOpenShiftPipelinesConfigs(c, namespace)
+func (c *OperatorV1alpha1Client) OpenShiftPipelinesConfigs() OpenShiftPipelinesConfigInterface {
+	return newOpenShiftPipelinesConfigs(c)
 }
 
 // NewForConfig creates a new OperatorV1alpha1Client for the given config.

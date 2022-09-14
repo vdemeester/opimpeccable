@@ -33,7 +33,6 @@ import (
 // FakeOpenShiftPipelinesConfigs implements OpenShiftPipelinesConfigInterface
 type FakeOpenShiftPipelinesConfigs struct {
 	Fake *FakeOperatorV1alpha1
-	ns   string
 }
 
 var openshiftpipelinesconfigsResource = schema.GroupVersionResource{Group: "operator.openshift-pipelines.org", Version: "v1alpha1", Resource: "openshiftpipelinesconfigs"}
@@ -43,8 +42,7 @@ var openshiftpipelinesconfigsKind = schema.GroupVersionKind{Group: "operator.ope
 // Get takes name of the openShiftPipelinesConfig, and returns the corresponding openShiftPipelinesConfig object, and an error if there is any.
 func (c *FakeOpenShiftPipelinesConfigs) Get(ctx context.Context, name string, options v1.GetOptions) (result *v1alpha1.OpenShiftPipelinesConfig, err error) {
 	obj, err := c.Fake.
-		Invokes(testing.NewGetAction(openshiftpipelinesconfigsResource, c.ns, name), &v1alpha1.OpenShiftPipelinesConfig{})
-
+		Invokes(testing.NewRootGetAction(openshiftpipelinesconfigsResource, name), &v1alpha1.OpenShiftPipelinesConfig{})
 	if obj == nil {
 		return nil, err
 	}
@@ -54,8 +52,7 @@ func (c *FakeOpenShiftPipelinesConfigs) Get(ctx context.Context, name string, op
 // List takes label and field selectors, and returns the list of OpenShiftPipelinesConfigs that match those selectors.
 func (c *FakeOpenShiftPipelinesConfigs) List(ctx context.Context, opts v1.ListOptions) (result *v1alpha1.OpenShiftPipelinesConfigList, err error) {
 	obj, err := c.Fake.
-		Invokes(testing.NewListAction(openshiftpipelinesconfigsResource, openshiftpipelinesconfigsKind, c.ns, opts), &v1alpha1.OpenShiftPipelinesConfigList{})
-
+		Invokes(testing.NewRootListAction(openshiftpipelinesconfigsResource, openshiftpipelinesconfigsKind, opts), &v1alpha1.OpenShiftPipelinesConfigList{})
 	if obj == nil {
 		return nil, err
 	}
@@ -76,15 +73,13 @@ func (c *FakeOpenShiftPipelinesConfigs) List(ctx context.Context, opts v1.ListOp
 // Watch returns a watch.Interface that watches the requested openShiftPipelinesConfigs.
 func (c *FakeOpenShiftPipelinesConfigs) Watch(ctx context.Context, opts v1.ListOptions) (watch.Interface, error) {
 	return c.Fake.
-		InvokesWatch(testing.NewWatchAction(openshiftpipelinesconfigsResource, c.ns, opts))
-
+		InvokesWatch(testing.NewRootWatchAction(openshiftpipelinesconfigsResource, opts))
 }
 
 // Create takes the representation of a openShiftPipelinesConfig and creates it.  Returns the server's representation of the openShiftPipelinesConfig, and an error, if there is any.
 func (c *FakeOpenShiftPipelinesConfigs) Create(ctx context.Context, openShiftPipelinesConfig *v1alpha1.OpenShiftPipelinesConfig, opts v1.CreateOptions) (result *v1alpha1.OpenShiftPipelinesConfig, err error) {
 	obj, err := c.Fake.
-		Invokes(testing.NewCreateAction(openshiftpipelinesconfigsResource, c.ns, openShiftPipelinesConfig), &v1alpha1.OpenShiftPipelinesConfig{})
-
+		Invokes(testing.NewRootCreateAction(openshiftpipelinesconfigsResource, openShiftPipelinesConfig), &v1alpha1.OpenShiftPipelinesConfig{})
 	if obj == nil {
 		return nil, err
 	}
@@ -94,8 +89,7 @@ func (c *FakeOpenShiftPipelinesConfigs) Create(ctx context.Context, openShiftPip
 // Update takes the representation of a openShiftPipelinesConfig and updates it. Returns the server's representation of the openShiftPipelinesConfig, and an error, if there is any.
 func (c *FakeOpenShiftPipelinesConfigs) Update(ctx context.Context, openShiftPipelinesConfig *v1alpha1.OpenShiftPipelinesConfig, opts v1.UpdateOptions) (result *v1alpha1.OpenShiftPipelinesConfig, err error) {
 	obj, err := c.Fake.
-		Invokes(testing.NewUpdateAction(openshiftpipelinesconfigsResource, c.ns, openShiftPipelinesConfig), &v1alpha1.OpenShiftPipelinesConfig{})
-
+		Invokes(testing.NewRootUpdateAction(openshiftpipelinesconfigsResource, openShiftPipelinesConfig), &v1alpha1.OpenShiftPipelinesConfig{})
 	if obj == nil {
 		return nil, err
 	}
@@ -106,8 +100,7 @@ func (c *FakeOpenShiftPipelinesConfigs) Update(ctx context.Context, openShiftPip
 // Add a +genclient:noStatus comment above the type to avoid generating UpdateStatus().
 func (c *FakeOpenShiftPipelinesConfigs) UpdateStatus(ctx context.Context, openShiftPipelinesConfig *v1alpha1.OpenShiftPipelinesConfig, opts v1.UpdateOptions) (*v1alpha1.OpenShiftPipelinesConfig, error) {
 	obj, err := c.Fake.
-		Invokes(testing.NewUpdateSubresourceAction(openshiftpipelinesconfigsResource, "status", c.ns, openShiftPipelinesConfig), &v1alpha1.OpenShiftPipelinesConfig{})
-
+		Invokes(testing.NewRootUpdateSubresourceAction(openshiftpipelinesconfigsResource, "status", openShiftPipelinesConfig), &v1alpha1.OpenShiftPipelinesConfig{})
 	if obj == nil {
 		return nil, err
 	}
@@ -117,14 +110,13 @@ func (c *FakeOpenShiftPipelinesConfigs) UpdateStatus(ctx context.Context, openSh
 // Delete takes name of the openShiftPipelinesConfig and deletes it. Returns an error if one occurs.
 func (c *FakeOpenShiftPipelinesConfigs) Delete(ctx context.Context, name string, opts v1.DeleteOptions) error {
 	_, err := c.Fake.
-		Invokes(testing.NewDeleteActionWithOptions(openshiftpipelinesconfigsResource, c.ns, name, opts), &v1alpha1.OpenShiftPipelinesConfig{})
-
+		Invokes(testing.NewRootDeleteActionWithOptions(openshiftpipelinesconfigsResource, name, opts), &v1alpha1.OpenShiftPipelinesConfig{})
 	return err
 }
 
 // DeleteCollection deletes a collection of objects.
 func (c *FakeOpenShiftPipelinesConfigs) DeleteCollection(ctx context.Context, opts v1.DeleteOptions, listOpts v1.ListOptions) error {
-	action := testing.NewDeleteCollectionAction(openshiftpipelinesconfigsResource, c.ns, listOpts)
+	action := testing.NewRootDeleteCollectionAction(openshiftpipelinesconfigsResource, listOpts)
 
 	_, err := c.Fake.Invokes(action, &v1alpha1.OpenShiftPipelinesConfigList{})
 	return err
@@ -133,8 +125,7 @@ func (c *FakeOpenShiftPipelinesConfigs) DeleteCollection(ctx context.Context, op
 // Patch applies the patch and returns the patched openShiftPipelinesConfig.
 func (c *FakeOpenShiftPipelinesConfigs) Patch(ctx context.Context, name string, pt types.PatchType, data []byte, opts v1.PatchOptions, subresources ...string) (result *v1alpha1.OpenShiftPipelinesConfig, err error) {
 	obj, err := c.Fake.
-		Invokes(testing.NewPatchSubresourceAction(openshiftpipelinesconfigsResource, c.ns, name, pt, data, subresources...), &v1alpha1.OpenShiftPipelinesConfig{})
-
+		Invokes(testing.NewRootPatchSubresourceAction(openshiftpipelinesconfigsResource, name, pt, data, subresources...), &v1alpha1.OpenShiftPipelinesConfig{})
 	if obj == nil {
 		return nil, err
 	}

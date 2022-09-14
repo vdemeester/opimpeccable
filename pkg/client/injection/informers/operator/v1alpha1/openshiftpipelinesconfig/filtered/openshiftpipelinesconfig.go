@@ -89,8 +89,6 @@ func Get(ctx context.Context, selector string) v1alpha1.OpenShiftPipelinesConfig
 type wrapper struct {
 	client versioned.Interface
 
-	namespace string
-
 	selector string
 }
 
@@ -105,17 +103,13 @@ func (w *wrapper) Lister() operatorv1alpha1.OpenShiftPipelinesConfigLister {
 	return w
 }
 
-func (w *wrapper) OpenShiftPipelinesConfigs(namespace string) operatorv1alpha1.OpenShiftPipelinesConfigNamespaceLister {
-	return &wrapper{client: w.client, namespace: namespace, selector: w.selector}
-}
-
 func (w *wrapper) List(selector labels.Selector) (ret []*apisoperatorv1alpha1.OpenShiftPipelinesConfig, err error) {
 	reqs, err := labels.ParseToRequirements(w.selector)
 	if err != nil {
 		return nil, err
 	}
 	selector = selector.Add(reqs...)
-	lo, err := w.client.OperatorV1alpha1().OpenShiftPipelinesConfigs(w.namespace).List(context.TODO(), v1.ListOptions{
+	lo, err := w.client.OperatorV1alpha1().OpenShiftPipelinesConfigs().List(context.TODO(), v1.ListOptions{
 		LabelSelector: selector.String(),
 		// TODO(mattmoor): Incorporate resourceVersion bounds based on staleness criteria.
 	})
@@ -130,7 +124,7 @@ func (w *wrapper) List(selector labels.Selector) (ret []*apisoperatorv1alpha1.Op
 
 func (w *wrapper) Get(name string) (*apisoperatorv1alpha1.OpenShiftPipelinesConfig, error) {
 	// TODO(mattmoor): Check that the fetched object matches the selector.
-	return w.client.OperatorV1alpha1().OpenShiftPipelinesConfigs(w.namespace).Get(context.TODO(), name, v1.GetOptions{
+	return w.client.OperatorV1alpha1().OpenShiftPipelinesConfigs().Get(context.TODO(), name, v1.GetOptions{
 		// TODO(mattmoor): Incorporate resourceVersion bounds based on staleness criteria.
 	})
 }

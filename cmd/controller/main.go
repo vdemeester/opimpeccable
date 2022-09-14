@@ -40,11 +40,12 @@ func main() {
 	}
 	for _, c := range p.AllSupportedControllers() {
 		fmt.Println(c)
-		// 	controllers = append(controllers, c.ControllerConstructor)
+		// controllers = append(controllers, c.ControllerConstructor)
 	}
 	cfg := injection.ParseAndGetRESTConfigOrDie()
 	cfg.QPS = 50
-	ctx, _ := injection.EnableInjectionOrDie(signals.NewContext(), cfg)
+	ctx, startinformers := injection.EnableInjectionOrDie(signals.NewContext(), cfg)
+	startinformers()
 	ctx = contextWithPlatformName(ctx, "openshift")
 	installer.InitTektonInstallerSetClient(ctx)
 	sharedmain.MainWithConfig(ctx,

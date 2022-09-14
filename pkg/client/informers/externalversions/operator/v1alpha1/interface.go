@@ -41,5 +41,5 @@ func New(f internalinterfaces.SharedInformerFactory, namespace string, tweakList
 
 // OpenShiftPipelinesConfigs returns a OpenShiftPipelinesConfigInformer.
 func (v *version) OpenShiftPipelinesConfigs() OpenShiftPipelinesConfigInformer {
-	return &openShiftPipelinesConfigInformer{factory: v.factory, namespace: v.namespace, tweakListOptions: v.tweakListOptions}
+	return &openShiftPipelinesConfigInformer{factory: v.factory, tweakListOptions: v.tweakListOptions}
 }

@@ -21,7 +21,3 @@ package v1alpha1
 // OpenShiftPipelinesConfigListerExpansion allows custom methods to be added to
 // OpenShiftPipelinesConfigLister.
 type OpenShiftPipelinesConfigListerExpansion interface{}
-
-// OpenShiftPipelinesConfigNamespaceListerExpansion allows custom methods to be added to
-// OpenShiftPipelinesConfigNamespaceLister.
-type OpenShiftPipelinesConfigNamespaceListerExpansion interface{}

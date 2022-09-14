@@ -67,8 +67,6 @@ func Get(ctx context.Context) v1alpha1.OpenShiftPipelinesConfigInformer {
 type wrapper struct {
 	client versioned.Interface
 
-	namespace string
-
 	resourceVersion string
 }
 
@@ -83,10 +81,6 @@ func (w *wrapper) Lister() operatorv1alpha1.OpenShiftPipelinesConfigLister {
 	return w
 }
 
-func (w *wrapper) OpenShiftPipelinesConfigs(namespace string) operatorv1alpha1.OpenShiftPipelinesConfigNamespaceLister {
-	return &wrapper{client: w.client, namespace: namespace, resourceVersion: w.resourceVersion}
-}
-
 // SetResourceVersion allows consumers to adjust the minimum resourceVersion
 // used by the underlying client.  It is not accessible via the standard
 // lister interface, but can be accessed through a user-defined interface and
@@ -96,7 +90,7 @@ func (w *wrapper) SetResourceVersion(resourceVersion string) {
 }
 
 func (w *wrapper) List(selector labels.Selector) (ret []*apisoperatorv1alpha1.OpenShiftPipelinesConfig, err error) {
-	lo, err := w.client.OperatorV1alpha1().OpenShiftPipelinesConfigs(w.namespace).List(context.TODO(), v1.ListOptions{
+	lo, err := w.client.OperatorV1alpha1().OpenShiftPipelinesConfigs().List(context.TODO(), v1.ListOptions{
 		LabelSelector:   selector.String(),
 		ResourceVersion: w.resourceVersion,
 	})
@@ -110,7 +104,7 @@ func (w *wrapper) List(selector labels.Selector) (ret []*apisoperatorv1alpha1.Op
 }
 
 func (w *wrapper) Get(name string) (*apisoperatorv1alpha1.OpenShiftPipelinesConfig, error) {
-	return w.client.OperatorV1alpha1().OpenShiftPipelinesConfigs(w.namespace).Get(context.TODO(), name, v1.GetOptions{
+	return w.client.OperatorV1alpha1().OpenShiftPipelinesConfigs().Get(context.TODO(), name, v1.GetOptions{
 		ResourceVersion: w.resourceVersion,
 	})
 }
