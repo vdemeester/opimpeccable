@@ -15,7 +15,7 @@
 apiVersion: admissionregistration.k8s.io/v1
 kind: MutatingWebhookConfiguration
 metadata:
-  name: defaulting.webhook.operator.openshift-pipelines.org
+  name: defaulting.webhook.operator.openshift-pipelines.org 
   labels:
     operator.openshift-pipelines.org/release: devel
 webhooks:
@@ -32,7 +32,7 @@ webhooks:
 apiVersion: admissionregistration.k8s.io/v1
 kind: ValidatingWebhookConfiguration
 metadata:
-  name: validation.webhook.knative-operator.openshift-pipelines.org
+  name: validation.webhook.operator.openshift-pipelines.org
   labels:
     operator.openshift-pipelines.org/release: devel
 webhooks:

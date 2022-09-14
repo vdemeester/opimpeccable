@@ -38,4 +38,7 @@ import (
 	// operator payload
 	_ "github.com/tektoncd/operator"
 	_ "github.com/tektoncd/operator/hack"
+
+	// Force proxy-webhook import
+	_ "github.com/tektoncd/operator/cmd/openshift/proxy-webhook"
 )

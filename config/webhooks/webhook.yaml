@@ -64,7 +64,7 @@ spec:
         - name: CONFIG_LOGGING_NAME
           value: config-logging
         - name: METRICS_DOMAIN
-          value: knative.dev/samples
+          value: openshift-pipelines.org/operator
         - name: WEBHOOK_NAME
           value: webhook
 

@@ -17,14 +17,18 @@ limitations under the License.
 package main
 
 import (
+	"context"
+
 	// The set of controllers this controller process runs.
 	"github.com/tektoncd/operator/pkg/reconciler/openshift/openshiftplatform"
 	"github.com/tektoncd/operator/pkg/reconciler/platform"
 	"github.com/vdemeester/opimpeccable/pkg/reconciler/simpledeployment"
 
 	// This defines the shared main for injected controllers.
+	installer "github.com/tektoncd/operator/pkg/reconciler/shared/tektoninstallerset"
 	"knative.dev/pkg/injection"
 	"knative.dev/pkg/injection/sharedmain"
+	"knative.dev/pkg/signals"
 )
 
 func main() {
@@ -36,5 +40,24 @@ func main() {
 	for _, c := range p.AllSupportedControllers() {
 		controllers = append(controllers, c.ControllerConstructor)
 	}
-	sharedmain.Main("controller", controllers...)
+	cfg := injection.ParseAndGetRESTConfigOrDie()
+	cfg.QPS = 50
+	ctx, _ := injection.EnableInjectionOrDie(signals.NewContext(), cfg)
+	ctx = contextWithPlatformName(ctx, "openshift")
+	installer.InitTektonInstallerSetClient(ctx)
+	sharedmain.MainWithConfig(ctx,
+		"controller",
+		cfg,
+		controllers...,
+	)
+	// sharedmain.Main("controller", controllers...)
 }
+
+// contextWithPlatformName  adds platform name to a given context
+func contextWithPlatformName(ctx context.Context, pName string) context.Context {
+	ctx = context.WithValue(ctx, PlatformNameKey{}, pName)
+	return ctx
+}
+
+// PlatformNameKey is defines a 'key' for adding platform name to an instance of context.Context
+type PlatformNameKey struct{}

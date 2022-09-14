@@ -62,6 +62,10 @@ spec:
           valueFrom:
             fieldRef:
               fieldPath: metadata.namespace
+        - name: OPERATOR_NAME
+          value: redhat-openshift-pipelines-operator
+        - name: IMAGE_PIPELINES_PROXY
+          value: ko://github.com/vdemeester/opimpeccable/vendor/github.com/tektoncd/operator/cmd/openshift/proxy-webhook
         - name: CONFIG_LOGGING_NAME
           value: config-logging
         - name: CONFIG_OBSERVABILITY_NAME
