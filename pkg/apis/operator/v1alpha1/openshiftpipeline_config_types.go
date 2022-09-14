@@ -29,6 +29,7 @@ import (
 // +genclient
 // +genreconciler
 // +k8s:deepcopy-gen:interfaces=k8s.io/apimachinery/pkg/runtime.Object
+// +genclient:nonNamespaced
 type OpenShiftPipelinesConfig struct {
 	metav1.TypeMeta `json:",inline"`
 	// +optional

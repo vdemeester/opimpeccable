@@ -33,7 +33,7 @@ import (
 // OpenShiftPipelinesConfigsGetter has a method to return a OpenShiftPipelinesConfigInterface.
 // A group's client should implement this interface.
 type OpenShiftPipelinesConfigsGetter interface {
-	OpenShiftPipelinesConfigs(namespace string) OpenShiftPipelinesConfigInterface
+	OpenShiftPipelinesConfigs() OpenShiftPipelinesConfigInterface
 }
 
 // OpenShiftPipelinesConfigInterface has methods to work with OpenShiftPipelinesConfig resources.
@@ -53,14 +53,12 @@ type OpenShiftPipelinesConfigInterface interface {
 // openShiftPipelinesConfigs implements OpenShiftPipelinesConfigInterface
 type openShiftPipelinesConfigs struct {
 	client rest.Interface
-	ns     string
 }
 
 // newOpenShiftPipelinesConfigs returns a OpenShiftPipelinesConfigs
-func newOpenShiftPipelinesConfigs(c *OperatorV1alpha1Client, namespace string) *openShiftPipelinesConfigs {
+func newOpenShiftPipelinesConfigs(c *OperatorV1alpha1Client) *openShiftPipelinesConfigs {
 	return &openShiftPipelinesConfigs{
 		client: c.RESTClient(),
-		ns:     namespace,
 	}
 }
 
@@ -68,7 +66,6 @@ func newOpenShiftPipelinesConfigs(c *OperatorV1alpha1Client, namespace string) *
 func (c *openShiftPipelinesConfigs) Get(ctx context.Context, name string, options v1.GetOptions) (result *v1alpha1.OpenShiftPipelinesConfig, err error) {
 	result = &v1alpha1.OpenShiftPipelinesConfig{}
 	err = c.client.Get().
-		Namespace(c.ns).
 		Resource("openshiftpipelinesconfigs").
 		Name(name).
 		VersionedParams(&options, scheme.ParameterCodec).
@@ -85,7 +82,6 @@ func (c *openShiftPipelinesConfigs) List(ctx context.Context, opts v1.ListOption
 	}
 	result = &v1alpha1.OpenShiftPipelinesConfigList{}
 	err = c.client.Get().
-		Namespace(c.ns).
 		Resource("openshiftpipelinesconfigs").
 		VersionedParams(&opts, scheme.ParameterCodec).
 		Timeout(timeout).
@@ -102,7 +98,6 @@ func (c *openShiftPipelinesConfigs) Watch(ctx context.Context, opts v1.ListOptio
 	}
 	opts.Watch = true
 	return c.client.Get().
-		Namespace(c.ns).
 		Resource("openshiftpipelinesconfigs").
 		VersionedParams(&opts, scheme.ParameterCodec).
 		Timeout(timeout).
@@ -113,7 +108,6 @@ func (c *openShiftPipelinesConfigs) Watch(ctx context.Context, opts v1.ListOptio
 func (c *openShiftPipelinesConfigs) Create(ctx context.Context, openShiftPipelinesConfig *v1alpha1.OpenShiftPipelinesConfig, opts v1.CreateOptions) (result *v1alpha1.OpenShiftPipelinesConfig, err error) {
 	result = &v1alpha1.OpenShiftPipelinesConfig{}
 	err = c.client.Post().
-		Namespace(c.ns).
 		Resource("openshiftpipelinesconfigs").
 		VersionedParams(&opts, scheme.ParameterCodec).
 		Body(openShiftPipelinesConfig).
@@ -126,7 +120,6 @@ func (c *openShiftPipelinesConfigs) Create(ctx context.Context, openShiftPipelin
 func (c *openShiftPipelinesConfigs) Update(ctx context.Context, openShiftPipelinesConfig *v1alpha1.OpenShiftPipelinesConfig, opts v1.UpdateOptions) (result *v1alpha1.OpenShiftPipelinesConfig, err error) {
 	result = &v1alpha1.OpenShiftPipelinesConfig{}
 	err = c.client.Put().
-		Namespace(c.ns).
 		Resource("openshiftpipelinesconfigs").
 		Name(openShiftPipelinesConfig.Name).
 		VersionedParams(&opts, scheme.ParameterCodec).
@@ -141,7 +134,6 @@ func (c *openShiftPipelinesConfigs) Update(ctx context.Context, openShiftPipelin
 func (c *openShiftPipelinesConfigs) UpdateStatus(ctx context.Context, openShiftPipelinesConfig *v1alpha1.OpenShiftPipelinesConfig, opts v1.UpdateOptions) (result *v1alpha1.OpenShiftPipelinesConfig, err error) {
 	result = &v1alpha1.OpenShiftPipelinesConfig{}
 	err = c.client.Put().
-		Namespace(c.ns).
 		Resource("openshiftpipelinesconfigs").
 		Name(openShiftPipelinesConfig.Name).
 		SubResource("status").
@@ -155,7 +147,6 @@ func (c *openShiftPipelinesConfigs) UpdateStatus(ctx context.Context, openShiftP
 // Delete takes name of the openShiftPipelinesConfig and deletes it. Returns an error if one occurs.
 func (c *openShiftPipelinesConfigs) Delete(ctx context.Context, name string, opts v1.DeleteOptions) error {
 	return c.client.Delete().
-		Namespace(c.ns).
 		Resource("openshiftpipelinesconfigs").
 		Name(name).
 		Body(&opts).
@@ -170,7 +161,6 @@ func (c *openShiftPipelinesConfigs) DeleteCollection(ctx context.Context, opts v
 		timeout = time.Duration(*listOpts.TimeoutSeconds) * time.Second
 	}
 	return c.client.Delete().
-		Namespace(c.ns).
 		Resource("openshiftpipelinesconfigs").
 		VersionedParams(&listOpts, scheme.ParameterCodec).
 		Timeout(timeout).
@@ -183,7 +173,6 @@ func (c *openShiftPipelinesConfigs) DeleteCollection(ctx context.Context, opts v
 func (c *openShiftPipelinesConfigs) Patch(ctx context.Context, name string, pt types.PatchType, data []byte, opts v1.PatchOptions, subresources ...string) (result *v1alpha1.OpenShiftPipelinesConfig, err error) {
 	result = &v1alpha1.OpenShiftPipelinesConfig{}
 	err = c.client.Patch(pt).
-		Namespace(c.ns).
 		Resource("openshiftpipelinesconfigs").
 		Name(name).
 		SubResource(subresources...).

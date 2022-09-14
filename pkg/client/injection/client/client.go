@@ -111,22 +111,18 @@ func (w *wrapOperatorV1alpha1) RESTClient() rest.Interface {
 	panic("RESTClient called on dynamic client!")
 }
 
-func (w *wrapOperatorV1alpha1) OpenShiftPipelinesConfigs(namespace string) typedoperatorv1alpha1.OpenShiftPipelinesConfigInterface {
+func (w *wrapOperatorV1alpha1) OpenShiftPipelinesConfigs() typedoperatorv1alpha1.OpenShiftPipelinesConfigInterface {
 	return &wrapOperatorV1alpha1OpenShiftPipelinesConfigImpl{
 		dyn: w.dyn.Resource(schema.GroupVersionResource{
 			Group:    "operator.openshift-pipelines.org",
 			Version:  "v1alpha1",
 			Resource: "openshiftpipelinesconfigs",
 		}),
-
-		namespace: namespace,
 	}
 }
 
 type wrapOperatorV1alpha1OpenShiftPipelinesConfigImpl struct {
 	dyn dynamic.NamespaceableResourceInterface
-
-	namespace string
 }
 
 var _ typedoperatorv1alpha1.OpenShiftPipelinesConfigInterface = (*wrapOperatorV1alpha1OpenShiftPipelinesConfigImpl)(nil)
@@ -141,7 +137,7 @@ func (w *wrapOperatorV1alpha1OpenShiftPipelinesConfigImpl) Create(ctx context.Co
 	if err := convert(in, uo); err != nil {
 		return nil, err
 	}
-	uo, err := w.dyn.Namespace(w.namespace).Create(ctx, uo, opts)
+	uo, err := w.dyn.Create(ctx, uo, opts)
 	if err != nil {
 		return nil, err
 	}
@@ -153,15 +149,15 @@ func (w *wrapOperatorV1alpha1OpenShiftPipelinesConfigImpl) Create(ctx context.Co
 }
 
 func (w *wrapOperatorV1alpha1OpenShiftPipelinesConfigImpl) Delete(ctx context.Context, name string, opts v1.DeleteOptions) error {
-	return w.dyn.Namespace(w.namespace).Delete(ctx, name, opts)
+	return w.dyn.Delete(ctx, name, opts)
 }
 
 func (w *wrapOperatorV1alpha1OpenShiftPipelinesConfigImpl) DeleteCollection(ctx context.Context, opts v1.DeleteOptions, listOpts v1.ListOptions) error {
-	return w.dyn.Namespace(w.namespace).DeleteCollection(ctx, opts, listOpts)
+	return w.dyn.DeleteCollection(ctx, opts, listOpts)
 }
 
 func (w *wrapOperatorV1alpha1OpenShiftPipelinesConfigImpl) Get(ctx context.Context, name string, opts v1.GetOptions) (*v1alpha1.OpenShiftPipelinesConfig, error) {
-	uo, err := w.dyn.Namespace(w.namespace).Get(ctx, name, opts)
+	uo, err := w.dyn.Get(ctx, name, opts)
 	if err != nil {
 		return nil, err
 	}
@@ -173,7 +169,7 @@ func (w *wrapOperatorV1alpha1OpenShiftPipelinesConfigImpl) Get(ctx context.Conte
 }
 
 func (w *wrapOperatorV1alpha1OpenShiftPipelinesConfigImpl) List(ctx context.Context, opts v1.ListOptions) (*v1alpha1.OpenShiftPipelinesConfigList, error) {
-	uo, err := w.dyn.Namespace(w.namespace).List(ctx, opts)
+	uo, err := w.dyn.List(ctx, opts)
 	if err != nil {
 		return nil, err
 	}
@@ -185,7 +181,7 @@ func (w *wrapOperatorV1alpha1OpenShiftPipelinesConfigImpl) List(ctx context.Cont
 }
 
 func (w *wrapOperatorV1alpha1OpenShiftPipelinesConfigImpl) Patch(ctx context.Context, name string, pt types.PatchType, data []byte, opts v1.PatchOptions, subresources ...string) (result *v1alpha1.OpenShiftPipelinesConfig, err error) {
-	uo, err := w.dyn.Namespace(w.namespace).Patch(ctx, name, pt, data, opts)
+	uo, err := w.dyn.Patch(ctx, name, pt, data, opts)
 	if err != nil {
 		return nil, err
 	}
@@ -206,7 +202,7 @@ func (w *wrapOperatorV1alpha1OpenShiftPipelinesConfigImpl) Update(ctx context.Co
 	if err := convert(in, uo); err != nil {
 		return nil, err
 	}
-	uo, err := w.dyn.Namespace(w.namespace).Update(ctx, uo, opts)
+	uo, err := w.dyn.Update(ctx, uo, opts)
 	if err != nil {
 		return nil, err
 	}
@@ -227,7 +223,7 @@ func (w *wrapOperatorV1alpha1OpenShiftPipelinesConfigImpl) UpdateStatus(ctx cont
 	if err := convert(in, uo); err != nil {
 		return nil, err
 	}
-	uo, err := w.dyn.Namespace(w.namespace).UpdateStatus(ctx, uo, opts)
+	uo, err := w.dyn.UpdateStatus(ctx, uo, opts)
 	if err != nil {
 		return nil, err
 	}

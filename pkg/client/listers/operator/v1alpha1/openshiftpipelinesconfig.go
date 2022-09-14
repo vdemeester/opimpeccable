@@ -31,8 +31,9 @@ type OpenShiftPipelinesConfigLister interface {
 	// List lists all OpenShiftPipelinesConfigs in the indexer.
 	// Objects returned here must be treated as read-only.
 	List(selector labels.Selector) (ret []*v1alpha1.OpenShiftPipelinesConfig, err error)
-	// OpenShiftPipelinesConfigs returns an object that can list and get OpenShiftPipelinesConfigs.
-	OpenShiftPipelinesConfigs(namespace string) OpenShiftPipelinesConfigNamespaceLister
+	// Get retrieves the OpenShiftPipelinesConfig from the index for a given name.
+	// Objects returned here must be treated as read-only.
+	Get(name string) (*v1alpha1.OpenShiftPipelinesConfig, error)
 	OpenShiftPipelinesConfigListerExpansion
 }
 
@@ -54,41 +55,9 @@ func (s *openShiftPipelinesConfigLister) List(selector labels.Selector) (ret []*
 	return ret, err
 }
 
-// OpenShiftPipelinesConfigs returns an object that can list and get OpenShiftPipelinesConfigs.
-func (s *openShiftPipelinesConfigLister) OpenShiftPipelinesConfigs(namespace string) OpenShiftPipelinesConfigNamespaceLister {
-	return openShiftPipelinesConfigNamespaceLister{indexer: s.indexer, namespace: namespace}
-}
-
-// OpenShiftPipelinesConfigNamespaceLister helps list and get OpenShiftPipelinesConfigs.
-// All objects returned here must be treated as read-only.
-type OpenShiftPipelinesConfigNamespaceLister interface {
-	// List lists all OpenShiftPipelinesConfigs in the indexer for a given namespace.
-	// Objects returned here must be treated as read-only.
-	List(selector labels.Selector) (ret []*v1alpha1.OpenShiftPipelinesConfig, err error)
-	// Get retrieves the OpenShiftPipelinesConfig from the indexer for a given namespace and name.
-	// Objects returned here must be treated as read-only.
-	Get(name string) (*v1alpha1.OpenShiftPipelinesConfig, error)
-	OpenShiftPipelinesConfigNamespaceListerExpansion
-}
-
-// openShiftPipelinesConfigNamespaceLister implements the OpenShiftPipelinesConfigNamespaceLister
-// interface.
-type openShiftPipelinesConfigNamespaceLister struct {
-	indexer   cache.Indexer
-	namespace string
-}
-
-// List lists all OpenShiftPipelinesConfigs in the indexer for a given namespace.
-func (s openShiftPipelinesConfigNamespaceLister) List(selector labels.Selector) (ret []*v1alpha1.OpenShiftPipelinesConfig, err error) {
-	err = cache.ListAllByNamespace(s.indexer, s.namespace, selector, func(m interface{}) {
-		ret = append(ret, m.(*v1alpha1.OpenShiftPipelinesConfig))
-	})
-	return ret, err
-}
-
-// Get retrieves the OpenShiftPipelinesConfig from the indexer for a given namespace and name.
-func (s openShiftPipelinesConfigNamespaceLister) Get(name string) (*v1alpha1.OpenShiftPipelinesConfig, error) {
-	obj, exists, err := s.indexer.GetByKey(s.namespace + "/" + name)
+// Get retrieves the OpenShiftPipelinesConfig from the index for a given name.
+func (s *openShiftPipelinesConfigLister) Get(name string) (*v1alpha1.OpenShiftPipelinesConfig, error) {
+	obj, exists, err := s.indexer.GetByKey(name)
 	if err != nil {
 		return nil, err
 	}

@@ -195,7 +195,7 @@ func (r *reconcilerImpl) Reconcile(ctx context.Context, key string) error {
 
 	// Get the resource with this namespace/name.
 
-	getter := r.Lister.OpenShiftPipelinesConfigs(s.namespace)
+	getter := r.Lister
 
 	original, err := getter.Get(s.name)
 
@@ -314,7 +314,7 @@ func (r *reconcilerImpl) updateStatus(ctx context.Context, existing *v1alpha1.Op
 		// The first iteration tries to use the injectionInformer's state, subsequent attempts fetch the latest state via API.
 		if attempts > 0 {
 
-			getter := r.Client.OperatorV1alpha1().OpenShiftPipelinesConfigs(desired.Namespace)
+			getter := r.Client.OperatorV1alpha1().OpenShiftPipelinesConfigs()
 
 			existing, err = getter.Get(ctx, desired.Name, metav1.GetOptions{})
 			if err != nil {
@@ -333,7 +333,7 @@ func (r *reconcilerImpl) updateStatus(ctx context.Context, existing *v1alpha1.Op
 
 		existing.Status = desired.Status
 
-		updater := r.Client.OperatorV1alpha1().OpenShiftPipelinesConfigs(existing.Namespace)
+		updater := r.Client.OperatorV1alpha1().OpenShiftPipelinesConfigs()
 
 		_, err = updater.UpdateStatus(ctx, existing, metav1.UpdateOptions{})
 		return err
@@ -345,7 +345,7 @@ func (r *reconcilerImpl) updateStatus(ctx context.Context, existing *v1alpha1.Op
 // updates defaultFinalizerName or its override.
 func (r *reconcilerImpl) updateFinalizersFiltered(ctx context.Context, resource *v1alpha1.OpenShiftPipelinesConfig) (*v1alpha1.OpenShiftPipelinesConfig, error) {
 
-	getter := r.Lister.OpenShiftPipelinesConfigs(resource.Namespace)
+	getter := r.Lister
 
 	actual, err := getter.Get(resource.Name)
 	if err != nil {
@@ -390,7 +390,7 @@ func (r *reconcilerImpl) updateFinalizersFiltered(ctx context.Context, resource 
 		return resource, err
 	}
 
-	patcher := r.Client.OperatorV1alpha1().OpenShiftPipelinesConfigs(resource.Namespace)
+	patcher := r.Client.OperatorV1alpha1().OpenShiftPipelinesConfigs()
 
 	resourceName := resource.Name
 	updated, err := patcher.Patch(ctx, resourceName, types.MergePatchType, patch, metav1.PatchOptions{})

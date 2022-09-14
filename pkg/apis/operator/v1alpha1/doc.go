@@ -14,6 +14,6 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-// +k8s:deepcopy-gen=package
+// +k8s:deepcopy-gen=package,register
 // +groupName=operator.openshift-pipelines.org
 package v1alpha1
