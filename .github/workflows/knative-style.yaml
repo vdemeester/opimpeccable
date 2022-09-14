@@ -3,13 +3,13 @@
 
 # This file is automagically synced here from github.com/knative-sandbox/knobots
 
-name: Code Style
-
-on:
-  pull_request:
-    branches: [ 'main', 'release-*' ]
-
-jobs:
-
-  style:
-    uses: knative/actions/.github/workflows/style.yaml@main
+# name: Code Style
+# 
+# on:
+#   pull_request:
+#     branches: [ 'main', 'release-*' ]
+# 
+# jobs:
+# 
+#   style:
+#     uses: knative/actions/.github/workflows/style.yaml@main
