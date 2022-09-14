@@ -57,7 +57,7 @@ type openShiftPipelinesConfigs struct {
 }
 
 // newOpenShiftPipelinesConfigs returns a OpenShiftPipelinesConfigs
-func newOpenShiftPipelinesConfigs(c *SamplesV1alpha1Client, namespace string) *openShiftPipelinesConfigs {
+func newOpenShiftPipelinesConfigs(c *OperatorV1alpha1Client, namespace string) *openShiftPipelinesConfigs {
 	return &openShiftPipelinesConfigs{
 		client: c.RESTClient(),
 		ns:     namespace,

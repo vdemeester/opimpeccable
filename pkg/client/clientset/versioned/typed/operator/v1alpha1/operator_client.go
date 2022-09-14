@@ -26,24 +26,24 @@ import (
 	rest "k8s.io/client-go/rest"
 )
 
-type SamplesV1alpha1Interface interface {
+type OperatorV1alpha1Interface interface {
 	RESTClient() rest.Interface
 	OpenShiftPipelinesConfigsGetter
 }
 
-// SamplesV1alpha1Client is used to interact with features provided by the samples.knative.dev group.
-type SamplesV1alpha1Client struct {
+// OperatorV1alpha1Client is used to interact with features provided by the operator.openshift-pipelines.org group.
+type OperatorV1alpha1Client struct {
 	restClient rest.Interface
 }
 
-func (c *SamplesV1alpha1Client) OpenShiftPipelinesConfigs(namespace string) OpenShiftPipelinesConfigInterface {
+func (c *OperatorV1alpha1Client) OpenShiftPipelinesConfigs(namespace string) OpenShiftPipelinesConfigInterface {
 	return newOpenShiftPipelinesConfigs(c, namespace)
 }
 
-// NewForConfig creates a new SamplesV1alpha1Client for the given config.
+// NewForConfig creates a new OperatorV1alpha1Client for the given config.
 // NewForConfig is equivalent to NewForConfigAndClient(c, httpClient),
 // where httpClient was generated with rest.HTTPClientFor(c).
-func NewForConfig(c *rest.Config) (*SamplesV1alpha1Client, error) {
+func NewForConfig(c *rest.Config) (*OperatorV1alpha1Client, error) {
 	config := *c
 	if err := setConfigDefaults(&config); err != nil {
 		return nil, err
@@ -55,9 +55,9 @@ func NewForConfig(c *rest.Config) (*SamplesV1alpha1Client, error) {
 	return NewForConfigAndClient(&config, httpClient)
 }
 
-// NewForConfigAndClient creates a new SamplesV1alpha1Client for the given config and http client.
+// NewForConfigAndClient creates a new OperatorV1alpha1Client for the given config and http client.
 // Note the http client provided takes precedence over the configured transport values.
-func NewForConfigAndClient(c *rest.Config, h *http.Client) (*SamplesV1alpha1Client, error) {
+func NewForConfigAndClient(c *rest.Config, h *http.Client) (*OperatorV1alpha1Client, error) {
 	config := *c
 	if err := setConfigDefaults(&config); err != nil {
 		return nil, err
@@ -66,12 +66,12 @@ func NewForConfigAndClient(c *rest.Config, h *http.Client) (*SamplesV1alpha1Clie
 	if err != nil {
 		return nil, err
 	}
-	return &SamplesV1alpha1Client{client}, nil
+	return &OperatorV1alpha1Client{client}, nil
 }
 
-// NewForConfigOrDie creates a new SamplesV1alpha1Client for the given config and
+// NewForConfigOrDie creates a new OperatorV1alpha1Client for the given config and
 // panics if there is an error in the config.
-func NewForConfigOrDie(c *rest.Config) *SamplesV1alpha1Client {
+func NewForConfigOrDie(c *rest.Config) *OperatorV1alpha1Client {
 	client, err := NewForConfig(c)
 	if err != nil {
 		panic(err)
@@ -79,9 +79,9 @@ func NewForConfigOrDie(c *rest.Config) *SamplesV1alpha1Client {
 	return client
 }
 
-// New creates a new SamplesV1alpha1Client for the given RESTClient.
-func New(c rest.Interface) *SamplesV1alpha1Client {
-	return &SamplesV1alpha1Client{c}
+// New creates a new OperatorV1alpha1Client for the given RESTClient.
+func New(c rest.Interface) *OperatorV1alpha1Client {
+	return &OperatorV1alpha1Client{c}
 }
 
 func setConfigDefaults(config *rest.Config) error {
@@ -99,7 +99,7 @@ func setConfigDefaults(config *rest.Config) error {
 
 // RESTClient returns a RESTClient that is used to communicate
 // with API server by this client implementation.
-func (c *SamplesV1alpha1Client) RESTClient() rest.Interface {
+func (c *OperatorV1alpha1Client) RESTClient() rest.Interface {
 	if c == nil {
 		return nil
 	}

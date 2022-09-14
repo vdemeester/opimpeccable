@@ -35,6 +35,6 @@ func init() {
 
 func withInformer(ctx context.Context) (context.Context, controller.Informer) {
 	f := fake.Get(ctx)
-	inf := f.Samples().V1alpha1().OpenShiftPipelinesConfigs()
+	inf := f.Operator().V1alpha1().OpenShiftPipelinesConfigs()
 	return context.WithValue(ctx, openshiftpipelinesconfig.Key{}, inf), inf.Informer()
 }

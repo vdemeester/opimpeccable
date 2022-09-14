@@ -45,7 +45,7 @@ type Key struct{}
 
 func withInformer(ctx context.Context) (context.Context, controller.Informer) {
 	f := factory.Get(ctx)
-	inf := f.Samples().V1alpha1().OpenShiftPipelinesConfigs()
+	inf := f.Operator().V1alpha1().OpenShiftPipelinesConfigs()
 	return context.WithValue(ctx, Key{}, inf), inf.Informer()
 }
 
@@ -96,7 +96,7 @@ func (w *wrapper) SetResourceVersion(resourceVersion string) {
 }
 
 func (w *wrapper) List(selector labels.Selector) (ret []*apisoperatorv1alpha1.OpenShiftPipelinesConfig, err error) {
-	lo, err := w.client.SamplesV1alpha1().OpenShiftPipelinesConfigs(w.namespace).List(context.TODO(), v1.ListOptions{
+	lo, err := w.client.OperatorV1alpha1().OpenShiftPipelinesConfigs(w.namespace).List(context.TODO(), v1.ListOptions{
 		LabelSelector:   selector.String(),
 		ResourceVersion: w.resourceVersion,
 	})
@@ -110,7 +110,7 @@ func (w *wrapper) List(selector labels.Selector) (ret []*apisoperatorv1alpha1.Op
 }
 
 func (w *wrapper) Get(name string) (*apisoperatorv1alpha1.OpenShiftPipelinesConfig, error) {
-	return w.client.SamplesV1alpha1().OpenShiftPipelinesConfigs(w.namespace).Get(context.TODO(), name, v1.GetOptions{
+	return w.client.OperatorV1alpha1().OpenShiftPipelinesConfigs(w.namespace).Get(context.TODO(), name, v1.GetOptions{
 		ResourceVersion: w.resourceVersion,
 	})
 }

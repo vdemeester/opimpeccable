@@ -314,7 +314,7 @@ func (r *reconcilerImpl) updateStatus(ctx context.Context, existing *v1alpha1.Op
 		// The first iteration tries to use the injectionInformer's state, subsequent attempts fetch the latest state via API.
 		if attempts > 0 {
 
-			getter := r.Client.SamplesV1alpha1().OpenShiftPipelinesConfigs(desired.Namespace)
+			getter := r.Client.OperatorV1alpha1().OpenShiftPipelinesConfigs(desired.Namespace)
 
 			existing, err = getter.Get(ctx, desired.Name, metav1.GetOptions{})
 			if err != nil {
@@ -333,7 +333,7 @@ func (r *reconcilerImpl) updateStatus(ctx context.Context, existing *v1alpha1.Op
 
 		existing.Status = desired.Status
 
-		updater := r.Client.SamplesV1alpha1().OpenShiftPipelinesConfigs(existing.Namespace)
+		updater := r.Client.OperatorV1alpha1().OpenShiftPipelinesConfigs(existing.Namespace)
 
 		_, err = updater.UpdateStatus(ctx, existing, metav1.UpdateOptions{})
 		return err
@@ -390,7 +390,7 @@ func (r *reconcilerImpl) updateFinalizersFiltered(ctx context.Context, resource 
 		return resource, err
 	}
 
-	patcher := r.Client.SamplesV1alpha1().OpenShiftPipelinesConfigs(resource.Namespace)
+	patcher := r.Client.OperatorV1alpha1().OpenShiftPipelinesConfigs(resource.Namespace)
 
 	resourceName := resource.Name
 	updated, err := patcher.Patch(ctx, resourceName, types.MergePatchType, patch, metav1.PatchOptions{})

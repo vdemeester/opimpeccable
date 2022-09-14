@@ -1,0 +1,6 @@
+apiVersion: operator.openshift-pipelines.org/v1alpha1
+kind: OpenShiftPipelinesConfig
+metadata:
+  name: config
+spec:
+  profile: lite

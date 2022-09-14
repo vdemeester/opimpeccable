@@ -62,13 +62,13 @@ func NewFilteredOpenShiftPipelinesConfigInformer(client versioned.Interface, nam
 				if tweakListOptions != nil {
 					tweakListOptions(&options)
 				}
-				return client.SamplesV1alpha1().OpenShiftPipelinesConfigs(namespace).List(context.TODO(), options)
+				return client.OperatorV1alpha1().OpenShiftPipelinesConfigs(namespace).List(context.TODO(), options)
 			},
 			WatchFunc: func(options v1.ListOptions) (watch.Interface, error) {
 				if tweakListOptions != nil {
 					tweakListOptions(&options)
 				}
-				return client.SamplesV1alpha1().OpenShiftPipelinesConfigs(namespace).Watch(context.TODO(), options)
+				return client.OperatorV1alpha1().OpenShiftPipelinesConfigs(namespace).Watch(context.TODO(), options)
 			},
 		},
 		&operatorv1alpha1.OpenShiftPipelinesConfig{},

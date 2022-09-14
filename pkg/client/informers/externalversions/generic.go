@@ -52,9 +52,9 @@ func (f *genericInformer) Lister() cache.GenericLister {
 // TODO extend this to unknown resources with a client pool
 func (f *sharedInformerFactory) ForResource(resource schema.GroupVersionResource) (GenericInformer, error) {
 	switch resource {
-	// Group=samples.knative.dev, Version=v1alpha1
+	// Group=operator.openshift-pipelines.org, Version=v1alpha1
 	case v1alpha1.SchemeGroupVersion.WithResource("openshiftpipelinesconfigs"):
-		return &genericInformer{resource: resource.GroupResource(), informer: f.Samples().V1alpha1().OpenShiftPipelinesConfigs().Informer()}, nil
+		return &genericInformer{resource: resource.GroupResource(), informer: f.Operator().V1alpha1().OpenShiftPipelinesConfigs().Informer()}, nil
 
 	}
 

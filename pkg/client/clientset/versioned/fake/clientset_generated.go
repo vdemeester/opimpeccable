@@ -20,8 +20,8 @@ package fake
 
 import (
 	clientset "github.com/vdemeester/opimpeccable/pkg/client/clientset/versioned"
-	samplesv1alpha1 "github.com/vdemeester/opimpeccable/pkg/client/clientset/versioned/typed/operator/v1alpha1"
-	fakesamplesv1alpha1 "github.com/vdemeester/opimpeccable/pkg/client/clientset/versioned/typed/operator/v1alpha1/fake"
+	operatorv1alpha1 "github.com/vdemeester/opimpeccable/pkg/client/clientset/versioned/typed/operator/v1alpha1"
+	fakeoperatorv1alpha1 "github.com/vdemeester/opimpeccable/pkg/client/clientset/versioned/typed/operator/v1alpha1/fake"
 	"k8s.io/apimachinery/pkg/runtime"
 	"k8s.io/apimachinery/pkg/watch"
 	"k8s.io/client-go/discovery"
@@ -79,7 +79,7 @@ var (
 	_ testing.FakeClient  = &Clientset{}
 )
 
-// SamplesV1alpha1 retrieves the SamplesV1alpha1Client
-func (c *Clientset) SamplesV1alpha1() samplesv1alpha1.SamplesV1alpha1Interface {
-	return &fakesamplesv1alpha1.FakeSamplesV1alpha1{Fake: &c.Fake}
+// OperatorV1alpha1 retrieves the OperatorV1alpha1Client
+func (c *Clientset) OperatorV1alpha1() operatorv1alpha1.OperatorV1alpha1Interface {
+	return &fakeoperatorv1alpha1.FakeOperatorV1alpha1{Fake: &c.Fake}
 }

@@ -54,8 +54,9 @@ var (
 
 // OpenShiftPipelinesConfigSpec holds the desired state of the OpenShiftPipelinesConfig (from the client).
 type OpenShiftPipelinesConfigSpec struct {
-	Image    string `json:"image"`
-	Replicas int32  `json:"replicas"`
+	Profile string `json:"profile,omitempty"`
+	// This is where we can shape our API just the way we want
+	// Like something for PipelineAsCode
 }
 
 const (

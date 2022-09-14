@@ -18,6 +18,7 @@ package main
 
 import (
 	"context"
+	"fmt"
 
 	// The set of controllers this controller process runs.
 	"github.com/tektoncd/operator/pkg/reconciler/openshift/openshiftplatform"
@@ -38,7 +39,8 @@ func main() {
 		opconfig.NewController,
 	}
 	for _, c := range p.AllSupportedControllers() {
-		controllers = append(controllers, c.ControllerConstructor)
+		fmt.Println(c)
+		// 	controllers = append(controllers, c.ControllerConstructor)
 	}
 	cfg := injection.ParseAndGetRESTConfigOrDie()
 	cfg.QPS = 50

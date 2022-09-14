@@ -21,7 +21,19 @@ import (
 	"knative.dev/pkg/apis"
 )
 
-var simpleDeploymentCondSet = apis.NewLivingConditionSet()
+const (
+	PreInstall      apis.ConditionType = "PreInstall"
+	ComponentsReady apis.ConditionType = "ComponentsReady"
+	PostInstall     apis.ConditionType = "PostInstall"
+)
+
+var (
+	configCondSet = apis.NewLivingConditionSet(
+		PreInstall,
+		ComponentsReady,
+		PostInstall,
+	)
+)
 
 // GetGroupVersionKind implements kmeta.OwnerRefable
 func (*OpenShiftPipelinesConfig) GetGroupVersionKind() schema.GroupVersionKind {
@@ -30,23 +42,17 @@ func (*OpenShiftPipelinesConfig) GetGroupVersionKind() schema.GroupVersionKind {
 
 // GetConditionSet retrieves the condition set for this resource. Implements the KRShaped interface.
 func (d *OpenShiftPipelinesConfig) GetConditionSet() apis.ConditionSet {
-	return simpleDeploymentCondSet
+	return configCondSet
 }
 
 // InitializeConditions sets the initial values to the conditions.
-func (ds *OpenShiftPipelinesConfigStatus) InitializeConditions() {
-	simpleDeploymentCondSet.Manage(ds).InitializeConditions()
+func (ospcs *OpenShiftPipelinesConfigStatus) InitializeConditions() {
+	configCondSet.Manage(ospcs).InitializeConditions()
 }
 
-// MarkPodsNotReady makes the OpenShiftPipelinesConfig be not ready.
-func (ds *OpenShiftPipelinesConfigStatus) MarkPodsNotReady(n int32) {
-	simpleDeploymentCondSet.Manage(ds).MarkFalse(
-		OpenShiftPipelinesConfigConditionReady,
-		"PodsNotReady",
-		"%d pods are not ready yet", n)
-}
-
-// MarkPodsReady makes the OpenShiftPipelinesConfig be ready.
-func (ds *OpenShiftPipelinesConfigStatus) MarkPodsReady() {
-	simpleDeploymentCondSet.Manage(ds).MarkTrue(OpenShiftPipelinesConfigConditionReady)
+func (ospcs *OpenShiftPipelinesConfigStatus) MarkNotReady(msg string) {
+	configCondSet.Manage(ospcs).MarkFalse(
+		apis.ConditionReady,
+		"Error",
+		"Ready: %s", msg)
 }

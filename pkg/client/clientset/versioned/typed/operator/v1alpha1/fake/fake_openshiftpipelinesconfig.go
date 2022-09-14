@@ -32,13 +32,13 @@ import (
 
 // FakeOpenShiftPipelinesConfigs implements OpenShiftPipelinesConfigInterface
 type FakeOpenShiftPipelinesConfigs struct {
-	Fake *FakeSamplesV1alpha1
+	Fake *FakeOperatorV1alpha1
 	ns   string
 }
 
-var openshiftpipelinesconfigsResource = schema.GroupVersionResource{Group: "samples.knative.dev", Version: "v1alpha1", Resource: "openshiftpipelinesconfigs"}
+var openshiftpipelinesconfigsResource = schema.GroupVersionResource{Group: "operator.openshift-pipelines.org", Version: "v1alpha1", Resource: "openshiftpipelinesconfigs"}
 
-var openshiftpipelinesconfigsKind = schema.GroupVersionKind{Group: "samples.knative.dev", Version: "v1alpha1", Kind: "OpenShiftPipelinesConfig"}
+var openshiftpipelinesconfigsKind = schema.GroupVersionKind{Group: "operator.openshift-pipelines.org", Version: "v1alpha1", Kind: "OpenShiftPipelinesConfig"}
 
 // Get takes name of the openShiftPipelinesConfig, and returns the corresponding openShiftPipelinesConfig object, and an error if there is any.
 func (c *FakeOpenShiftPipelinesConfigs) Get(ctx context.Context, name string, options v1.GetOptions) (result *v1alpha1.OpenShiftPipelinesConfig, err error) {

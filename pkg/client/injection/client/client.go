@@ -26,7 +26,7 @@ import (
 
 	v1alpha1 "github.com/vdemeester/opimpeccable/pkg/apis/operator/v1alpha1"
 	versioned "github.com/vdemeester/opimpeccable/pkg/client/clientset/versioned"
-	typedsamplesv1alpha1 "github.com/vdemeester/opimpeccable/pkg/client/clientset/versioned/typed/operator/v1alpha1"
+	typedoperatorv1alpha1 "github.com/vdemeester/opimpeccable/pkg/client/clientset/versioned/typed/operator/v1alpha1"
 	v1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	unstructured "k8s.io/apimachinery/pkg/apis/meta/v1/unstructured"
 	runtime "k8s.io/apimachinery/pkg/runtime"
@@ -96,25 +96,25 @@ func convert(from interface{}, to runtime.Object) error {
 	return nil
 }
 
-// SamplesV1alpha1 retrieves the SamplesV1alpha1Client
-func (w *wrapClient) SamplesV1alpha1() typedsamplesv1alpha1.SamplesV1alpha1Interface {
-	return &wrapSamplesV1alpha1{
+// OperatorV1alpha1 retrieves the OperatorV1alpha1Client
+func (w *wrapClient) OperatorV1alpha1() typedoperatorv1alpha1.OperatorV1alpha1Interface {
+	return &wrapOperatorV1alpha1{
 		dyn: w.dyn,
 	}
 }
 
-type wrapSamplesV1alpha1 struct {
+type wrapOperatorV1alpha1 struct {
 	dyn dynamic.Interface
 }
 
-func (w *wrapSamplesV1alpha1) RESTClient() rest.Interface {
+func (w *wrapOperatorV1alpha1) RESTClient() rest.Interface {
 	panic("RESTClient called on dynamic client!")
 }
 
-func (w *wrapSamplesV1alpha1) OpenShiftPipelinesConfigs(namespace string) typedsamplesv1alpha1.OpenShiftPipelinesConfigInterface {
-	return &wrapSamplesV1alpha1OpenShiftPipelinesConfigImpl{
+func (w *wrapOperatorV1alpha1) OpenShiftPipelinesConfigs(namespace string) typedoperatorv1alpha1.OpenShiftPipelinesConfigInterface {
+	return &wrapOperatorV1alpha1OpenShiftPipelinesConfigImpl{
 		dyn: w.dyn.Resource(schema.GroupVersionResource{
-			Group:    "samples.knative.dev",
+			Group:    "operator.openshift-pipelines.org",
 			Version:  "v1alpha1",
 			Resource: "openshiftpipelinesconfigs",
 		}),
@@ -123,17 +123,17 @@ func (w *wrapSamplesV1alpha1) OpenShiftPipelinesConfigs(namespace string) typeds
 	}
 }
 
-type wrapSamplesV1alpha1OpenShiftPipelinesConfigImpl struct {
+type wrapOperatorV1alpha1OpenShiftPipelinesConfigImpl struct {
 	dyn dynamic.NamespaceableResourceInterface
 
 	namespace string
 }
 
-var _ typedsamplesv1alpha1.OpenShiftPipelinesConfigInterface = (*wrapSamplesV1alpha1OpenShiftPipelinesConfigImpl)(nil)
+var _ typedoperatorv1alpha1.OpenShiftPipelinesConfigInterface = (*wrapOperatorV1alpha1OpenShiftPipelinesConfigImpl)(nil)
 
-func (w *wrapSamplesV1alpha1OpenShiftPipelinesConfigImpl) Create(ctx context.Context, in *v1alpha1.OpenShiftPipelinesConfig, opts v1.CreateOptions) (*v1alpha1.OpenShiftPipelinesConfig, error) {
+func (w *wrapOperatorV1alpha1OpenShiftPipelinesConfigImpl) Create(ctx context.Context, in *v1alpha1.OpenShiftPipelinesConfig, opts v1.CreateOptions) (*v1alpha1.OpenShiftPipelinesConfig, error) {
 	in.SetGroupVersionKind(schema.GroupVersionKind{
-		Group:   "samples.knative.dev",
+		Group:   "operator.openshift-pipelines.org",
 		Version: "v1alpha1",
 		Kind:    "OpenShiftPipelinesConfig",
 	})
@@ -152,15 +152,15 @@ func (w *wrapSamplesV1alpha1OpenShiftPipelinesConfigImpl) Create(ctx context.Con
 	return out, nil
 }
 
-func (w *wrapSamplesV1alpha1OpenShiftPipelinesConfigImpl) Delete(ctx context.Context, name string, opts v1.DeleteOptions) error {
+func (w *wrapOperatorV1alpha1OpenShiftPipelinesConfigImpl) Delete(ctx context.Context, name string, opts v1.DeleteOptions) error {
 	return w.dyn.Namespace(w.namespace).Delete(ctx, name, opts)
 }
 
-func (w *wrapSamplesV1alpha1OpenShiftPipelinesConfigImpl) DeleteCollection(ctx context.Context, opts v1.DeleteOptions, listOpts v1.ListOptions) error {
+func (w *wrapOperatorV1alpha1OpenShiftPipelinesConfigImpl) DeleteCollection(ctx context.Context, opts v1.DeleteOptions, listOpts v1.ListOptions) error {
 	return w.dyn.Namespace(w.namespace).DeleteCollection(ctx, opts, listOpts)
 }
 
-func (w *wrapSamplesV1alpha1OpenShiftPipelinesConfigImpl) Get(ctx context.Context, name string, opts v1.GetOptions) (*v1alpha1.OpenShiftPipelinesConfig, error) {
+func (w *wrapOperatorV1alpha1OpenShiftPipelinesConfigImpl) Get(ctx context.Context, name string, opts v1.GetOptions) (*v1alpha1.OpenShiftPipelinesConfig, error) {
 	uo, err := w.dyn.Namespace(w.namespace).Get(ctx, name, opts)
 	if err != nil {
 		return nil, err
@@ -172,7 +172,7 @@ func (w *wrapSamplesV1alpha1OpenShiftPipelinesConfigImpl) Get(ctx context.Contex
 	return out, nil
 }
 
-func (w *wrapSamplesV1alpha1OpenShiftPipelinesConfigImpl) List(ctx context.Context, opts v1.ListOptions) (*v1alpha1.OpenShiftPipelinesConfigList, error) {
+func (w *wrapOperatorV1alpha1OpenShiftPipelinesConfigImpl) List(ctx context.Context, opts v1.ListOptions) (*v1alpha1.OpenShiftPipelinesConfigList, error) {
 	uo, err := w.dyn.Namespace(w.namespace).List(ctx, opts)
 	if err != nil {
 		return nil, err
@@ -184,7 +184,7 @@ func (w *wrapSamplesV1alpha1OpenShiftPipelinesConfigImpl) List(ctx context.Conte
 	return out, nil
 }
 
-func (w *wrapSamplesV1alpha1OpenShiftPipelinesConfigImpl) Patch(ctx context.Context, name string, pt types.PatchType, data []byte, opts v1.PatchOptions, subresources ...string) (result *v1alpha1.OpenShiftPipelinesConfig, err error) {
+func (w *wrapOperatorV1alpha1OpenShiftPipelinesConfigImpl) Patch(ctx context.Context, name string, pt types.PatchType, data []byte, opts v1.PatchOptions, subresources ...string) (result *v1alpha1.OpenShiftPipelinesConfig, err error) {
 	uo, err := w.dyn.Namespace(w.namespace).Patch(ctx, name, pt, data, opts)
 	if err != nil {
 		return nil, err
@@ -196,9 +196,9 @@ func (w *wrapSamplesV1alpha1OpenShiftPipelinesConfigImpl) Patch(ctx context.Cont
 	return out, nil
 }
 
-func (w *wrapSamplesV1alpha1OpenShiftPipelinesConfigImpl) Update(ctx context.Context, in *v1alpha1.OpenShiftPipelinesConfig, opts v1.UpdateOptions) (*v1alpha1.OpenShiftPipelinesConfig, error) {
+func (w *wrapOperatorV1alpha1OpenShiftPipelinesConfigImpl) Update(ctx context.Context, in *v1alpha1.OpenShiftPipelinesConfig, opts v1.UpdateOptions) (*v1alpha1.OpenShiftPipelinesConfig, error) {
 	in.SetGroupVersionKind(schema.GroupVersionKind{
-		Group:   "samples.knative.dev",
+		Group:   "operator.openshift-pipelines.org",
 		Version: "v1alpha1",
 		Kind:    "OpenShiftPipelinesConfig",
 	})
@@ -217,9 +217,9 @@ func (w *wrapSamplesV1alpha1OpenShiftPipelinesConfigImpl) Update(ctx context.Con
 	return out, nil
 }
 
-func (w *wrapSamplesV1alpha1OpenShiftPipelinesConfigImpl) UpdateStatus(ctx context.Context, in *v1alpha1.OpenShiftPipelinesConfig, opts v1.UpdateOptions) (*v1alpha1.OpenShiftPipelinesConfig, error) {
+func (w *wrapOperatorV1alpha1OpenShiftPipelinesConfigImpl) UpdateStatus(ctx context.Context, in *v1alpha1.OpenShiftPipelinesConfig, opts v1.UpdateOptions) (*v1alpha1.OpenShiftPipelinesConfig, error) {
 	in.SetGroupVersionKind(schema.GroupVersionKind{
-		Group:   "samples.knative.dev",
+		Group:   "operator.openshift-pipelines.org",
 		Version: "v1alpha1",
 		Kind:    "OpenShiftPipelinesConfig",
 	})
@@ -238,6 +238,6 @@ func (w *wrapSamplesV1alpha1OpenShiftPipelinesConfigImpl) UpdateStatus(ctx conte
 	return out, nil
 }
 
-func (w *wrapSamplesV1alpha1OpenShiftPipelinesConfigImpl) Watch(ctx context.Context, opts v1.ListOptions) (watch.Interface, error) {
+func (w *wrapOperatorV1alpha1OpenShiftPipelinesConfigImpl) Watch(ctx context.Context, opts v1.ListOptions) (watch.Interface, error) {
 	return nil, errors.New("NYI: Watch")
 }

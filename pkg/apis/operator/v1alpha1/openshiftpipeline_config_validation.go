@@ -29,8 +29,5 @@ func (d *OpenShiftPipelinesConfig) Validate(ctx context.Context) *apis.FieldErro
 
 // Validate implements apis.Validatable
 func (ds *OpenShiftPipelinesConfigSpec) Validate(ctx context.Context) *apis.FieldError {
-	if ds.Image == "" {
-		return apis.ErrMissingField("image")
-	}
 	return nil
 }

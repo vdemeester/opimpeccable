@@ -15,7 +15,7 @@
 apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
-  name: openshiftpipelinesconfig.operator.openshift-pipelines.org
+  name: openshiftpipelinesconfigs.operator.openshift-pipelines.org
   labels:
     operator.openshift-pipelines.org/release: devel
     knative.dev/crd-install: "true"
@@ -35,11 +35,8 @@ spec:
               description: Spec holds the desired state of the OpenShiftPipelinesConfig (from the client).
               type: object
               properties:
-                image:
+                profile:
                   type: string
-                replicas:
-                  type: integer
-                  format: int32
             status:
               description: Status communicates the observed state of the OpenShiftPipelinesConfig (from the controller).
               type: object
@@ -93,9 +90,6 @@ spec:
     kind: OpenShiftPipelinesConfig
     plural: openshiftpipelinesconfigs
     singular: openshiftpipelinesconfig
-    categories:
-      - all
-      - knative
     shortNames:
-      - sdeploy
-  scope: Namespaced
+      - opc
+  scope: Cluster
