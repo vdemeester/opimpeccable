@@ -15,7 +15,7 @@
 apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
-  name: simpledeployments.operator.openshift-pipelines.org
+  name: openshiftpipelinesconfig.operator.openshift-pipelines.org
   labels:
     operator.openshift-pipelines.org/release: devel
     knative.dev/crd-install: "true"
@@ -32,7 +32,7 @@ spec:
           type: object
           properties:
             spec:
-              description: Spec holds the desired state of the SimpleDeployment (from the client).
+              description: Spec holds the desired state of the OpenShiftPipelinesConfig (from the client).
               type: object
               properties:
                 image:
@@ -41,7 +41,7 @@ spec:
                   type: integer
                   format: int32
             status:
-              description: Status communicates the observed state of the SimpleDeployment (from the controller).
+              description: Status communicates the observed state of the OpenShiftPipelinesConfig (from the controller).
               type: object
               properties:
                 annotations:
@@ -90,9 +90,9 @@ spec:
           type: string
           jsonPath: ".status.conditions[?(@.type=='Ready')].reason"
   names:
-    kind: SimpleDeployment
-    plural: simpledeployments
-    singular: simpledeployment
+    kind: OpenShiftPipelinesConfig
+    plural: openshiftpipelinesconfigs
+    singular: openshiftpipelinesconfig
     categories:
       - all
       - knative

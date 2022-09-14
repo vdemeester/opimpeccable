@@ -24,8 +24,8 @@ import (
 
 // Interface provides access to all the informers in this group version.
 type Interface interface {
-	// SimpleDeployments returns a SimpleDeploymentInformer.
-	SimpleDeployments() SimpleDeploymentInformer
+	// OpenShiftPipelinesConfigs returns a OpenShiftPipelinesConfigInformer.
+	OpenShiftPipelinesConfigs() OpenShiftPipelinesConfigInformer
 }
 
 type version struct {
@@ -39,7 +39,7 @@ func New(f internalinterfaces.SharedInformerFactory, namespace string, tweakList
 	return &version{factory: f, namespace: namespace, tweakListOptions: tweakListOptions}
 }
 
-// SimpleDeployments returns a SimpleDeploymentInformer.
-func (v *version) SimpleDeployments() SimpleDeploymentInformer {
-	return &simpleDeploymentInformer{factory: v.factory, namespace: v.namespace, tweakListOptions: v.tweakListOptions}
+// OpenShiftPipelinesConfigs returns a OpenShiftPipelinesConfigInformer.
+func (v *version) OpenShiftPipelinesConfigs() OpenShiftPipelinesConfigInformer {
+	return &openShiftPipelinesConfigInformer{factory: v.factory, namespace: v.namespace, tweakListOptions: v.tweakListOptions}
 }

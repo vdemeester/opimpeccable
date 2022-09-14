@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-package simpledeployment
+package opconfig
 
 import (
 	"context"
@@ -24,8 +24,8 @@ import (
 	"knative.dev/pkg/controller"
 
 	"github.com/vdemeester/opimpeccable/pkg/apis/operator/v1alpha1"
-	simpledeploymentinformer "github.com/vdemeester/opimpeccable/pkg/client/injection/informers/operator/v1alpha1/simpledeployment"
-	simpledeploymentreconciler "github.com/vdemeester/opimpeccable/pkg/client/injection/reconciler/operator/v1alpha1/simpledeployment"
+	openshiftpipelinesconfiginformer "github.com/vdemeester/opimpeccable/pkg/client/injection/informers/operator/v1alpha1/openshiftpipelinesconfig"
+	openshiftpipelinesconfigreconciler "github.com/vdemeester/opimpeccable/pkg/client/injection/reconciler/operator/v1alpha1/openshiftpipelinesconfig"
 	kubeclient "knative.dev/pkg/client/injection/kube/client"
 	podinformer "knative.dev/pkg/client/injection/kube/informers/core/v1/pod"
 )
@@ -38,7 +38,7 @@ func NewController(
 	// Obtain an informer to both the main and child resources. These will be started by
 	// the injection framework automatically. They'll keep a cached representation of the
 	// cluster's state of the respective resource at all times.
-	simpledeploymentInformer := simpledeploymentinformer.Get(ctx)
+	openshiftpipelinesconfigInformer := openshiftpipelinesconfiginformer.Get(ctx)
 	podInformer := podinformer.Get(ctx)
 
 	r := &Reconciler{
@@ -48,14 +48,14 @@ func NewController(
 		// read pod data.
 		podLister: podInformer.Lister(),
 	}
-	impl := simpledeploymentreconciler.NewImpl(ctx, r)
+	impl := openshiftpipelinesconfigreconciler.NewImpl(ctx, r)
 
 	// Listen for events on the main resource and enqueue themselves.
-	simpledeploymentInformer.Informer().AddEventHandler(controller.HandleAll(impl.Enqueue))
+	openshiftpipelinesconfigInformer.Informer().AddEventHandler(controller.HandleAll(impl.Enqueue))
 
 	// Listen for events on the child resources and enqueue the owner of them.
 	podInformer.Informer().AddEventHandler(cache.FilteringResourceEventHandler{
-		FilterFunc: controller.FilterController(&v1alpha1.SimpleDeployment{}),
+		FilterFunc: controller.FilterController(&v1alpha1.OpenShiftPipelinesConfig{}),
 		Handler:    controller.HandleAll(impl.EnqueueControllerOf),
 	})
 

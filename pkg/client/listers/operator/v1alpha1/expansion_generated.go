@@ -18,10 +18,10 @@ limitations under the License.
 
 package v1alpha1
 
-// SimpleDeploymentListerExpansion allows custom methods to be added to
-// SimpleDeploymentLister.
-type SimpleDeploymentListerExpansion interface{}
+// OpenShiftPipelinesConfigListerExpansion allows custom methods to be added to
+// OpenShiftPipelinesConfigLister.
+type OpenShiftPipelinesConfigListerExpansion interface{}
 
-// SimpleDeploymentNamespaceListerExpansion allows custom methods to be added to
-// SimpleDeploymentNamespaceLister.
-type SimpleDeploymentNamespaceListerExpansion interface{}
+// OpenShiftPipelinesConfigNamespaceListerExpansion allows custom methods to be added to
+// OpenShiftPipelinesConfigNamespaceLister.
+type OpenShiftPipelinesConfigNamespaceListerExpansion interface{}

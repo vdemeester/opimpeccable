@@ -27,7 +27,7 @@ import (
 
 // schema is a tool to dump the schema for Eventing resources.
 func main() {
-	registry.Register(&v1alpha1.SimpleDeployment{})
+	registry.Register(&v1alpha1.OpenShiftPipelinesConfig{})
 
 	if err := commands.New("github.com/vdemeester/opimpeccable").Execute(); err != nil {
 		log.Fatal("Error during command execution: ", err)

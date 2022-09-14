@@ -39,7 +39,7 @@ import (
 
 var types = map[schema.GroupVersionKind]resourcesemantics.GenericCRD{
 	// List the types to validate.
-	v1alpha1.SchemeGroupVersion.WithKind("SimpleDeployment"): &v1alpha1.SimpleDeployment{},
+	v1alpha1.SchemeGroupVersion.WithKind("OpenShiftPipelinesConfig"): &v1alpha1.OpenShiftPipelinesConfig{},
 }
 
 var callbacks = map[schema.GroupVersionKind]validation.Callback{}

@@ -32,59 +32,59 @@ import (
 	cache "k8s.io/client-go/tools/cache"
 )
 
-// SimpleDeploymentInformer provides access to a shared informer and lister for
-// SimpleDeployments.
-type SimpleDeploymentInformer interface {
+// OpenShiftPipelinesConfigInformer provides access to a shared informer and lister for
+// OpenShiftPipelinesConfigs.
+type OpenShiftPipelinesConfigInformer interface {
 	Informer() cache.SharedIndexInformer
-	Lister() v1alpha1.SimpleDeploymentLister
+	Lister() v1alpha1.OpenShiftPipelinesConfigLister
 }
 
-type simpleDeploymentInformer struct {
+type openShiftPipelinesConfigInformer struct {
 	factory          internalinterfaces.SharedInformerFactory
 	tweakListOptions internalinterfaces.TweakListOptionsFunc
 	namespace        string
 }
 
-// NewSimpleDeploymentInformer constructs a new informer for SimpleDeployment type.
+// NewOpenShiftPipelinesConfigInformer constructs a new informer for OpenShiftPipelinesConfig type.
 // Always prefer using an informer factory to get a shared informer instead of getting an independent
 // one. This reduces memory footprint and number of connections to the server.
-func NewSimpleDeploymentInformer(client versioned.Interface, namespace string, resyncPeriod time.Duration, indexers cache.Indexers) cache.SharedIndexInformer {
-	return NewFilteredSimpleDeploymentInformer(client, namespace, resyncPeriod, indexers, nil)
+func NewOpenShiftPipelinesConfigInformer(client versioned.Interface, namespace string, resyncPeriod time.Duration, indexers cache.Indexers) cache.SharedIndexInformer {
+	return NewFilteredOpenShiftPipelinesConfigInformer(client, namespace, resyncPeriod, indexers, nil)
 }
 
-// NewFilteredSimpleDeploymentInformer constructs a new informer for SimpleDeployment type.
+// NewFilteredOpenShiftPipelinesConfigInformer constructs a new informer for OpenShiftPipelinesConfig type.
 // Always prefer using an informer factory to get a shared informer instead of getting an independent
 // one. This reduces memory footprint and number of connections to the server.
-func NewFilteredSimpleDeploymentInformer(client versioned.Interface, namespace string, resyncPeriod time.Duration, indexers cache.Indexers, tweakListOptions internalinterfaces.TweakListOptionsFunc) cache.SharedIndexInformer {
+func NewFilteredOpenShiftPipelinesConfigInformer(client versioned.Interface, namespace string, resyncPeriod time.Duration, indexers cache.Indexers, tweakListOptions internalinterfaces.TweakListOptionsFunc) cache.SharedIndexInformer {
 	return cache.NewSharedIndexInformer(
 		&cache.ListWatch{
 			ListFunc: func(options v1.ListOptions) (runtime.Object, error) {
 				if tweakListOptions != nil {
 					tweakListOptions(&options)
 				}
-				return client.SamplesV1alpha1().SimpleDeployments(namespace).List(context.TODO(), options)
+				return client.SamplesV1alpha1().OpenShiftPipelinesConfigs(namespace).List(context.TODO(), options)
 			},
 			WatchFunc: func(options v1.ListOptions) (watch.Interface, error) {
 				if tweakListOptions != nil {
 					tweakListOptions(&options)
 				}
-				return client.SamplesV1alpha1().SimpleDeployments(namespace).Watch(context.TODO(), options)
+				return client.SamplesV1alpha1().OpenShiftPipelinesConfigs(namespace).Watch(context.TODO(), options)
 			},
 		},
-		&operatorv1alpha1.SimpleDeployment{},
+		&operatorv1alpha1.OpenShiftPipelinesConfig{},
 		resyncPeriod,
 		indexers,
 	)
 }
 
-func (f *simpleDeploymentInformer) defaultInformer(client versioned.Interface, resyncPeriod time.Duration) cache.SharedIndexInformer {
-	return NewFilteredSimpleDeploymentInformer(client, f.namespace, resyncPeriod, cache.Indexers{cache.NamespaceIndex: cache.MetaNamespaceIndexFunc}, f.tweakListOptions)
+func (f *openShiftPipelinesConfigInformer) defaultInformer(client versioned.Interface, resyncPeriod time.Duration) cache.SharedIndexInformer {
+	return NewFilteredOpenShiftPipelinesConfigInformer(client, f.namespace, resyncPeriod, cache.Indexers{cache.NamespaceIndex: cache.MetaNamespaceIndexFunc}, f.tweakListOptions)
 }
 
-func (f *simpleDeploymentInformer) Informer() cache.SharedIndexInformer {
-	return f.factory.InformerFor(&operatorv1alpha1.SimpleDeployment{}, f.defaultInformer)
+func (f *openShiftPipelinesConfigInformer) Informer() cache.SharedIndexInformer {
+	return f.factory.InformerFor(&operatorv1alpha1.OpenShiftPipelinesConfig{}, f.defaultInformer)
 }
 
-func (f *simpleDeploymentInformer) Lister() v1alpha1.SimpleDeploymentLister {
-	return v1alpha1.NewSimpleDeploymentLister(f.Informer().GetIndexer())
+func (f *openShiftPipelinesConfigInformer) Lister() v1alpha1.OpenShiftPipelinesConfigLister {
+	return v1alpha1.NewOpenShiftPipelinesConfigLister(f.Informer().GetIndexer())
 }

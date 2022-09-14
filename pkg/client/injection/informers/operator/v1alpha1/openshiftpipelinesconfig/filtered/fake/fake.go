@@ -22,7 +22,7 @@ import (
 	context "context"
 
 	factoryfiltered "github.com/vdemeester/opimpeccable/pkg/client/injection/informers/factory/filtered"
-	filtered "github.com/vdemeester/opimpeccable/pkg/client/injection/informers/operator/v1alpha1/simpledeployment/filtered"
+	filtered "github.com/vdemeester/opimpeccable/pkg/client/injection/informers/operator/v1alpha1/openshiftpipelinesconfig/filtered"
 	controller "knative.dev/pkg/controller"
 	injection "knative.dev/pkg/injection"
 	logging "knative.dev/pkg/logging"
@@ -44,7 +44,7 @@ func withInformer(ctx context.Context) (context.Context, []controller.Informer) 
 	infs := []controller.Informer{}
 	for _, selector := range labelSelectors {
 		f := factoryfiltered.Get(ctx, selector)
-		inf := f.Samples().V1alpha1().SimpleDeployments()
+		inf := f.Samples().V1alpha1().OpenShiftPipelinesConfigs()
 		ctx = context.WithValue(ctx, filtered.Key{Selector: selector}, inf)
 		infs = append(infs, inf.Informer())
 	}

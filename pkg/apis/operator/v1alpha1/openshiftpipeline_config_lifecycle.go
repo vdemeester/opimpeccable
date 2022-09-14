@@ -24,29 +24,29 @@ import (
 var simpleDeploymentCondSet = apis.NewLivingConditionSet()
 
 // GetGroupVersionKind implements kmeta.OwnerRefable
-func (*SimpleDeployment) GetGroupVersionKind() schema.GroupVersionKind {
-	return SchemeGroupVersion.WithKind("SimpleDeployment")
+func (*OpenShiftPipelinesConfig) GetGroupVersionKind() schema.GroupVersionKind {
+	return SchemeGroupVersion.WithKind("OpenShiftPipelinesConfig")
 }
 
 // GetConditionSet retrieves the condition set for this resource. Implements the KRShaped interface.
-func (d *SimpleDeployment) GetConditionSet() apis.ConditionSet {
+func (d *OpenShiftPipelinesConfig) GetConditionSet() apis.ConditionSet {
 	return simpleDeploymentCondSet
 }
 
 // InitializeConditions sets the initial values to the conditions.
-func (ds *SimpleDeploymentStatus) InitializeConditions() {
+func (ds *OpenShiftPipelinesConfigStatus) InitializeConditions() {
 	simpleDeploymentCondSet.Manage(ds).InitializeConditions()
 }
 
-// MarkPodsNotReady makes the SimpleDeployment be not ready.
-func (ds *SimpleDeploymentStatus) MarkPodsNotReady(n int32) {
+// MarkPodsNotReady makes the OpenShiftPipelinesConfig be not ready.
+func (ds *OpenShiftPipelinesConfigStatus) MarkPodsNotReady(n int32) {
 	simpleDeploymentCondSet.Manage(ds).MarkFalse(
-		SimpleDeploymentConditionReady,
+		OpenShiftPipelinesConfigConditionReady,
 		"PodsNotReady",
 		"%d pods are not ready yet", n)
 }
 
-// MarkPodsReady makes the SimpleDeployment be ready.
-func (ds *SimpleDeploymentStatus) MarkPodsReady() {
-	simpleDeploymentCondSet.Manage(ds).MarkTrue(SimpleDeploymentConditionReady)
+// MarkPodsReady makes the OpenShiftPipelinesConfig be ready.
+func (ds *OpenShiftPipelinesConfigStatus) MarkPodsReady() {
+	simpleDeploymentCondSet.Manage(ds).MarkTrue(OpenShiftPipelinesConfigConditionReady)
 }

@@ -23,65 +23,65 @@ import (
 	"knative.dev/pkg/kmeta"
 )
 
-// SimpleDeployment is a Knative abstraction that encapsulates the interface by which Knative
+// OpenShiftPipelinesConfig is a Knative abstraction that encapsulates the interface by which Knative
 // components express a desire to have a particular image cached.
 //
 // +genclient
 // +genreconciler
 // +k8s:deepcopy-gen:interfaces=k8s.io/apimachinery/pkg/runtime.Object
-type SimpleDeployment struct {
+type OpenShiftPipelinesConfig struct {
 	metav1.TypeMeta `json:",inline"`
 	// +optional
 	metav1.ObjectMeta `json:"metadata,omitempty"`
 
-	// Spec holds the desired state of the SimpleDeployment (from the client).
+	// Spec holds the desired state of the OpenShiftPipelinesConfig (from the client).
 	// +optional
-	Spec SimpleDeploymentSpec `json:"spec,omitempty"`
+	Spec OpenShiftPipelinesConfigSpec `json:"spec,omitempty"`
 
-	// Status communicates the observed state of the SimpleDeployment (from the controller).
+	// Status communicates the observed state of the OpenShiftPipelinesConfig (from the controller).
 	// +optional
-	Status SimpleDeploymentStatus `json:"status,omitempty"`
+	Status OpenShiftPipelinesConfigStatus `json:"status,omitempty"`
 }
 
 var (
 	// Check that AddressableService can be validated and defaulted.
-	_ apis.Validatable   = (*SimpleDeployment)(nil)
-	_ apis.Defaultable   = (*SimpleDeployment)(nil)
-	_ kmeta.OwnerRefable = (*SimpleDeployment)(nil)
+	_ apis.Validatable   = (*OpenShiftPipelinesConfig)(nil)
+	_ apis.Defaultable   = (*OpenShiftPipelinesConfig)(nil)
+	_ kmeta.OwnerRefable = (*OpenShiftPipelinesConfig)(nil)
 	// Check that the type conforms to the duck Knative Resource shape.
-	_ duckv1.KRShaped = (*SimpleDeployment)(nil)
+	_ duckv1.KRShaped = (*OpenShiftPipelinesConfig)(nil)
 )
 
-// SimpleDeploymentSpec holds the desired state of the SimpleDeployment (from the client).
-type SimpleDeploymentSpec struct {
+// OpenShiftPipelinesConfigSpec holds the desired state of the OpenShiftPipelinesConfig (from the client).
+type OpenShiftPipelinesConfigSpec struct {
 	Image    string `json:"image"`
 	Replicas int32  `json:"replicas"`
 }
 
 const (
-	// SimpleDeploymentConditionReady is set when the revision is starting to materialize
+	// OpenShiftPipelinesConfigConditionReady is set when the revision is starting to materialize
 	// runtime resources, and becomes true when those resources are ready.
-	SimpleDeploymentConditionReady = apis.ConditionReady
+	OpenShiftPipelinesConfigConditionReady = apis.ConditionReady
 )
 
-// SimpleDeploymentStatus communicates the observed state of the SimpleDeployment (from the controller).
-type SimpleDeploymentStatus struct {
+// OpenShiftPipelinesConfigStatus communicates the observed state of the OpenShiftPipelinesConfig (from the controller).
+type OpenShiftPipelinesConfigStatus struct {
 	duckv1.Status `json:",inline"`
 
 	ReadyReplicas int32 `json:"readyReplicas"`
 }
 
-// SimpleDeploymentList is a list of AddressableService resources
+// OpenShiftPipelinesConfigList is a list of AddressableService resources
 //
 // +k8s:deepcopy-gen:interfaces=k8s.io/apimachinery/pkg/runtime.Object
-type SimpleDeploymentList struct {
+type OpenShiftPipelinesConfigList struct {
 	metav1.TypeMeta `json:",inline"`
 	metav1.ListMeta `json:"metadata"`
 
-	Items []SimpleDeployment `json:"items"`
+	Items []OpenShiftPipelinesConfig `json:"items"`
 }
 
 // GetStatus retrieves the status of the resource. Implements the KRShaped interface.
-func (d *SimpleDeployment) GetStatus() *duckv1.Status {
+func (d *OpenShiftPipelinesConfig) GetStatus() *duckv1.Status {
 	return &d.Status.Status
 }

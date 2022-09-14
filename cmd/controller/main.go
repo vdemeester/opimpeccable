@@ -22,7 +22,7 @@ import (
 	// The set of controllers this controller process runs.
 	"github.com/tektoncd/operator/pkg/reconciler/openshift/openshiftplatform"
 	"github.com/tektoncd/operator/pkg/reconciler/platform"
-	"github.com/vdemeester/opimpeccable/pkg/reconciler/simpledeployment"
+	"github.com/vdemeester/opimpeccable/pkg/reconciler/opconfig"
 
 	// This defines the shared main for injected controllers.
 	installer "github.com/tektoncd/operator/pkg/reconciler/shared/tektoninstallerset"
@@ -35,7 +35,7 @@ func main() {
 	pConfig := platform.NewConfigFromFlags()
 	p := openshiftplatform.NewOpenShiftPlatform(pConfig)
 	controllers := []injection.ControllerConstructor{
-		simpledeployment.NewController,
+		opconfig.NewController,
 	}
 	for _, c := range p.AllSupportedControllers() {
 		controllers = append(controllers, c.ControllerConstructor)

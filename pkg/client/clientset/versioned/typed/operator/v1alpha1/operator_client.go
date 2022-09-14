@@ -28,7 +28,7 @@ import (
 
 type SamplesV1alpha1Interface interface {
 	RESTClient() rest.Interface
-	SimpleDeploymentsGetter
+	OpenShiftPipelinesConfigsGetter
 }
 
 // SamplesV1alpha1Client is used to interact with features provided by the samples.knative.dev group.
@@ -36,8 +36,8 @@ type SamplesV1alpha1Client struct {
 	restClient rest.Interface
 }
 
-func (c *SamplesV1alpha1Client) SimpleDeployments(namespace string) SimpleDeploymentInterface {
-	return newSimpleDeployments(c, namespace)
+func (c *SamplesV1alpha1Client) OpenShiftPipelinesConfigs(namespace string) OpenShiftPipelinesConfigInterface {
+	return newOpenShiftPipelinesConfigs(c, namespace)
 }
 
 // NewForConfig creates a new SamplesV1alpha1Client for the given config.

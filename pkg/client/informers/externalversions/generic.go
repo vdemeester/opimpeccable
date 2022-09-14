@@ -53,8 +53,8 @@ func (f *genericInformer) Lister() cache.GenericLister {
 func (f *sharedInformerFactory) ForResource(resource schema.GroupVersionResource) (GenericInformer, error) {
 	switch resource {
 	// Group=samples.knative.dev, Version=v1alpha1
-	case v1alpha1.SchemeGroupVersion.WithResource("simpledeployments"):
-		return &genericInformer{resource: resource.GroupResource(), informer: f.Samples().V1alpha1().SimpleDeployments().Informer()}, nil
+	case v1alpha1.SchemeGroupVersion.WithResource("openshiftpipelinesconfigs"):
+		return &genericInformer{resource: resource.GroupResource(), informer: f.Samples().V1alpha1().OpenShiftPipelinesConfigs().Informer()}, nil
 
 	}
 

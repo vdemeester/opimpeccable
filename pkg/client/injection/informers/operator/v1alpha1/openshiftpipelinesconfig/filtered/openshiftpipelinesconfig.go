@@ -55,7 +55,7 @@ func withInformer(ctx context.Context) (context.Context, []controller.Informer) 
 	infs := []controller.Informer{}
 	for _, selector := range labelSelectors {
 		f := filtered.Get(ctx, selector)
-		inf := f.Samples().V1alpha1().SimpleDeployments()
+		inf := f.Samples().V1alpha1().OpenShiftPipelinesConfigs()
 		ctx = context.WithValue(ctx, Key{Selector: selector}, inf)
 		infs = append(infs, inf.Informer())
 	}
@@ -77,13 +77,13 @@ func withDynamicInformer(ctx context.Context) context.Context {
 }
 
 // Get extracts the typed informer from the context.
-func Get(ctx context.Context, selector string) v1alpha1.SimpleDeploymentInformer {
+func Get(ctx context.Context, selector string) v1alpha1.OpenShiftPipelinesConfigInformer {
 	untyped := ctx.Value(Key{Selector: selector})
 	if untyped == nil {
 		logging.FromContext(ctx).Panicf(
-			"Unable to fetch github.com/vdemeester/opimpeccable/pkg/client/informers/externalversions/operator/v1alpha1.SimpleDeploymentInformer with selector %s from context.", selector)
+			"Unable to fetch github.com/vdemeester/opimpeccable/pkg/client/informers/externalversions/operator/v1alpha1.OpenShiftPipelinesConfigInformer with selector %s from context.", selector)
 	}
-	return untyped.(v1alpha1.SimpleDeploymentInformer)
+	return untyped.(v1alpha1.OpenShiftPipelinesConfigInformer)
 }
 
 type wrapper struct {
@@ -94,28 +94,28 @@ type wrapper struct {
 	selector string
 }
 
-var _ v1alpha1.SimpleDeploymentInformer = (*wrapper)(nil)
-var _ operatorv1alpha1.SimpleDeploymentLister = (*wrapper)(nil)
+var _ v1alpha1.OpenShiftPipelinesConfigInformer = (*wrapper)(nil)
+var _ operatorv1alpha1.OpenShiftPipelinesConfigLister = (*wrapper)(nil)
 
 func (w *wrapper) Informer() cache.SharedIndexInformer {
-	return cache.NewSharedIndexInformer(nil, &apisoperatorv1alpha1.SimpleDeployment{}, 0, nil)
+	return cache.NewSharedIndexInformer(nil, &apisoperatorv1alpha1.OpenShiftPipelinesConfig{}, 0, nil)
 }
 
-func (w *wrapper) Lister() operatorv1alpha1.SimpleDeploymentLister {
+func (w *wrapper) Lister() operatorv1alpha1.OpenShiftPipelinesConfigLister {
 	return w
 }
 
-func (w *wrapper) SimpleDeployments(namespace string) operatorv1alpha1.SimpleDeploymentNamespaceLister {
+func (w *wrapper) OpenShiftPipelinesConfigs(namespace string) operatorv1alpha1.OpenShiftPipelinesConfigNamespaceLister {
 	return &wrapper{client: w.client, namespace: namespace, selector: w.selector}
 }
 
-func (w *wrapper) List(selector labels.Selector) (ret []*apisoperatorv1alpha1.SimpleDeployment, err error) {
+func (w *wrapper) List(selector labels.Selector) (ret []*apisoperatorv1alpha1.OpenShiftPipelinesConfig, err error) {
 	reqs, err := labels.ParseToRequirements(w.selector)
 	if err != nil {
 		return nil, err
 	}
 	selector = selector.Add(reqs...)
-	lo, err := w.client.SamplesV1alpha1().SimpleDeployments(w.namespace).List(context.TODO(), v1.ListOptions{
+	lo, err := w.client.SamplesV1alpha1().OpenShiftPipelinesConfigs(w.namespace).List(context.TODO(), v1.ListOptions{
 		LabelSelector: selector.String(),
 		// TODO(mattmoor): Incorporate resourceVersion bounds based on staleness criteria.
 	})
@@ -128,9 +128,9 @@ func (w *wrapper) List(selector labels.Selector) (ret []*apisoperatorv1alpha1.Si
 	return ret, nil
 }
 
-func (w *wrapper) Get(name string) (*apisoperatorv1alpha1.SimpleDeployment, error) {
+func (w *wrapper) Get(name string) (*apisoperatorv1alpha1.OpenShiftPipelinesConfig, error) {
 	// TODO(mattmoor): Check that the fetched object matches the selector.
-	return w.client.SamplesV1alpha1().SimpleDeployments(w.namespace).Get(context.TODO(), name, v1.GetOptions{
+	return w.client.SamplesV1alpha1().OpenShiftPipelinesConfigs(w.namespace).Get(context.TODO(), name, v1.GetOptions{
 		// TODO(mattmoor): Incorporate resourceVersion bounds based on staleness criteria.
 	})
 }

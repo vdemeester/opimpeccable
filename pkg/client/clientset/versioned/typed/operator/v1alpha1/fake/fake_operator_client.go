@@ -28,8 +28,8 @@ type FakeSamplesV1alpha1 struct {
 	*testing.Fake
 }
 
-func (c *FakeSamplesV1alpha1) SimpleDeployments(namespace string) v1alpha1.SimpleDeploymentInterface {
-	return &FakeSimpleDeployments{c, namespace}
+func (c *FakeSamplesV1alpha1) OpenShiftPipelinesConfigs(namespace string) v1alpha1.OpenShiftPipelinesConfigInterface {
+	return &FakeOpenShiftPipelinesConfigs{c, namespace}
 }
 
 // RESTClient returns a RESTClient that is used to communicate

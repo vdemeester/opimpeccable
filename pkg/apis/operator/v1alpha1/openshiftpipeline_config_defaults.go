@@ -18,19 +18,9 @@ package v1alpha1
 
 import (
 	"context"
-
-	"knative.dev/pkg/apis"
 )
 
-// Validate implements apis.Validatable
-func (d *SimpleDeployment) Validate(ctx context.Context) *apis.FieldError {
-	return d.Spec.Validate(ctx).ViaField("spec")
-}
-
-// Validate implements apis.Validatable
-func (ds *SimpleDeploymentSpec) Validate(ctx context.Context) *apis.FieldError {
-	if ds.Image == "" {
-		return apis.ErrMissingField("image")
-	}
-	return nil
+// SetDefaults implements apis.Defaultable
+func (d *OpenShiftPipelinesConfig) SetDefaults(ctx context.Context) {
+	// Nothing to default.
 }

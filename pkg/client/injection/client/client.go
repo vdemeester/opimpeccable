@@ -111,31 +111,31 @@ func (w *wrapSamplesV1alpha1) RESTClient() rest.Interface {
 	panic("RESTClient called on dynamic client!")
 }
 
-func (w *wrapSamplesV1alpha1) SimpleDeployments(namespace string) typedsamplesv1alpha1.SimpleDeploymentInterface {
-	return &wrapSamplesV1alpha1SimpleDeploymentImpl{
+func (w *wrapSamplesV1alpha1) OpenShiftPipelinesConfigs(namespace string) typedsamplesv1alpha1.OpenShiftPipelinesConfigInterface {
+	return &wrapSamplesV1alpha1OpenShiftPipelinesConfigImpl{
 		dyn: w.dyn.Resource(schema.GroupVersionResource{
 			Group:    "samples.knative.dev",
 			Version:  "v1alpha1",
-			Resource: "simpledeployments",
+			Resource: "openshiftpipelinesconfigs",
 		}),
 
 		namespace: namespace,
 	}
 }
 
-type wrapSamplesV1alpha1SimpleDeploymentImpl struct {
+type wrapSamplesV1alpha1OpenShiftPipelinesConfigImpl struct {
 	dyn dynamic.NamespaceableResourceInterface
 
 	namespace string
 }
 
-var _ typedsamplesv1alpha1.SimpleDeploymentInterface = (*wrapSamplesV1alpha1SimpleDeploymentImpl)(nil)
+var _ typedsamplesv1alpha1.OpenShiftPipelinesConfigInterface = (*wrapSamplesV1alpha1OpenShiftPipelinesConfigImpl)(nil)
 
-func (w *wrapSamplesV1alpha1SimpleDeploymentImpl) Create(ctx context.Context, in *v1alpha1.SimpleDeployment, opts v1.CreateOptions) (*v1alpha1.SimpleDeployment, error) {
+func (w *wrapSamplesV1alpha1OpenShiftPipelinesConfigImpl) Create(ctx context.Context, in *v1alpha1.OpenShiftPipelinesConfig, opts v1.CreateOptions) (*v1alpha1.OpenShiftPipelinesConfig, error) {
 	in.SetGroupVersionKind(schema.GroupVersionKind{
 		Group:   "samples.knative.dev",
 		Version: "v1alpha1",
-		Kind:    "SimpleDeployment",
+		Kind:    "OpenShiftPipelinesConfig",
 	})
 	uo := &unstructured.Unstructured{}
 	if err := convert(in, uo); err != nil {
@@ -145,62 +145,62 @@ func (w *wrapSamplesV1alpha1SimpleDeploymentImpl) Create(ctx context.Context, in
 	if err != nil {
 		return nil, err
 	}
-	out := &v1alpha1.SimpleDeployment{}
+	out := &v1alpha1.OpenShiftPipelinesConfig{}
 	if err := convert(uo, out); err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (w *wrapSamplesV1alpha1SimpleDeploymentImpl) Delete(ctx context.Context, name string, opts v1.DeleteOptions) error {
+func (w *wrapSamplesV1alpha1OpenShiftPipelinesConfigImpl) Delete(ctx context.Context, name string, opts v1.DeleteOptions) error {
 	return w.dyn.Namespace(w.namespace).Delete(ctx, name, opts)
 }
 
-func (w *wrapSamplesV1alpha1SimpleDeploymentImpl) DeleteCollection(ctx context.Context, opts v1.DeleteOptions, listOpts v1.ListOptions) error {
+func (w *wrapSamplesV1alpha1OpenShiftPipelinesConfigImpl) DeleteCollection(ctx context.Context, opts v1.DeleteOptions, listOpts v1.ListOptions) error {
 	return w.dyn.Namespace(w.namespace).DeleteCollection(ctx, opts, listOpts)
 }
 
-func (w *wrapSamplesV1alpha1SimpleDeploymentImpl) Get(ctx context.Context, name string, opts v1.GetOptions) (*v1alpha1.SimpleDeployment, error) {
+func (w *wrapSamplesV1alpha1OpenShiftPipelinesConfigImpl) Get(ctx context.Context, name string, opts v1.GetOptions) (*v1alpha1.OpenShiftPipelinesConfig, error) {
 	uo, err := w.dyn.Namespace(w.namespace).Get(ctx, name, opts)
 	if err != nil {
 		return nil, err
 	}
-	out := &v1alpha1.SimpleDeployment{}
+	out := &v1alpha1.OpenShiftPipelinesConfig{}
 	if err := convert(uo, out); err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (w *wrapSamplesV1alpha1SimpleDeploymentImpl) List(ctx context.Context, opts v1.ListOptions) (*v1alpha1.SimpleDeploymentList, error) {
+func (w *wrapSamplesV1alpha1OpenShiftPipelinesConfigImpl) List(ctx context.Context, opts v1.ListOptions) (*v1alpha1.OpenShiftPipelinesConfigList, error) {
 	uo, err := w.dyn.Namespace(w.namespace).List(ctx, opts)
 	if err != nil {
 		return nil, err
 	}
-	out := &v1alpha1.SimpleDeploymentList{}
+	out := &v1alpha1.OpenShiftPipelinesConfigList{}
 	if err := convert(uo, out); err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (w *wrapSamplesV1alpha1SimpleDeploymentImpl) Patch(ctx context.Context, name string, pt types.PatchType, data []byte, opts v1.PatchOptions, subresources ...string) (result *v1alpha1.SimpleDeployment, err error) {
+func (w *wrapSamplesV1alpha1OpenShiftPipelinesConfigImpl) Patch(ctx context.Context, name string, pt types.PatchType, data []byte, opts v1.PatchOptions, subresources ...string) (result *v1alpha1.OpenShiftPipelinesConfig, err error) {
 	uo, err := w.dyn.Namespace(w.namespace).Patch(ctx, name, pt, data, opts)
 	if err != nil {
 		return nil, err
 	}
-	out := &v1alpha1.SimpleDeployment{}
+	out := &v1alpha1.OpenShiftPipelinesConfig{}
 	if err := convert(uo, out); err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (w *wrapSamplesV1alpha1SimpleDeploymentImpl) Update(ctx context.Context, in *v1alpha1.SimpleDeployment, opts v1.UpdateOptions) (*v1alpha1.SimpleDeployment, error) {
+func (w *wrapSamplesV1alpha1OpenShiftPipelinesConfigImpl) Update(ctx context.Context, in *v1alpha1.OpenShiftPipelinesConfig, opts v1.UpdateOptions) (*v1alpha1.OpenShiftPipelinesConfig, error) {
 	in.SetGroupVersionKind(schema.GroupVersionKind{
 		Group:   "samples.knative.dev",
 		Version: "v1alpha1",
-		Kind:    "SimpleDeployment",
+		Kind:    "OpenShiftPipelinesConfig",
 	})
 	uo := &unstructured.Unstructured{}
 	if err := convert(in, uo); err != nil {
@@ -210,18 +210,18 @@ func (w *wrapSamplesV1alpha1SimpleDeploymentImpl) Update(ctx context.Context, in
 	if err != nil {
 		return nil, err
 	}
-	out := &v1alpha1.SimpleDeployment{}
+	out := &v1alpha1.OpenShiftPipelinesConfig{}
 	if err := convert(uo, out); err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (w *wrapSamplesV1alpha1SimpleDeploymentImpl) UpdateStatus(ctx context.Context, in *v1alpha1.SimpleDeployment, opts v1.UpdateOptions) (*v1alpha1.SimpleDeployment, error) {
+func (w *wrapSamplesV1alpha1OpenShiftPipelinesConfigImpl) UpdateStatus(ctx context.Context, in *v1alpha1.OpenShiftPipelinesConfig, opts v1.UpdateOptions) (*v1alpha1.OpenShiftPipelinesConfig, error) {
 	in.SetGroupVersionKind(schema.GroupVersionKind{
 		Group:   "samples.knative.dev",
 		Version: "v1alpha1",
-		Kind:    "SimpleDeployment",
+		Kind:    "OpenShiftPipelinesConfig",
 	})
 	uo := &unstructured.Unstructured{}
 	if err := convert(in, uo); err != nil {
@@ -231,13 +231,13 @@ func (w *wrapSamplesV1alpha1SimpleDeploymentImpl) UpdateStatus(ctx context.Conte
 	if err != nil {
 		return nil, err
 	}
-	out := &v1alpha1.SimpleDeployment{}
+	out := &v1alpha1.OpenShiftPipelinesConfig{}
 	if err := convert(uo, out); err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (w *wrapSamplesV1alpha1SimpleDeploymentImpl) Watch(ctx context.Context, opts v1.ListOptions) (watch.Interface, error) {
+func (w *wrapSamplesV1alpha1OpenShiftPipelinesConfigImpl) Watch(ctx context.Context, opts v1.ListOptions) (watch.Interface, error) {
 	return nil, errors.New("NYI: Watch")
 }
