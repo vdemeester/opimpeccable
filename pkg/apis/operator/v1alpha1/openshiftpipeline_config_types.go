@@ -17,10 +17,15 @@ limitations under the License.
 package v1alpha1
 
 import (
+	upstreamv1alpha1 "github.com/tektoncd/operator/pkg/apis/operator/v1alpha1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"knative.dev/pkg/apis"
 	duckv1 "knative.dev/pkg/apis/duck/v1"
 	"knative.dev/pkg/kmeta"
+)
+
+var (
+// _ upstreamv1alpha1.TektonComponent = (*OpenShiftPipelinesConfig)(nil)
 )
 
 // OpenShiftPipelinesConfig is a Knative abstraction that encapsulates the interface by which Knative
@@ -86,4 +91,27 @@ type OpenShiftPipelinesConfigList struct {
 // GetStatus retrieves the status of the resource. Implements the KRShaped interface.
 func (d *OpenShiftPipelinesConfig) GetStatus() *duckv1.Status {
 	return &d.Status.Status
+}
+
+// func (d *OpenShiftPipelinesConfig) GetStatus() upstreamv1alpha1.TektonComponentStatus {
+// 	return &d.Status
+// }
+
+func (d *OpenShiftPipelinesConfig) GetSpec() upstreamv1alpha1.TektonComponentSpec {
+	return &d.Spec
+}
+
+func (s *OpenShiftPipelinesConfigSpec) GetTargetNamespace() string {
+	// FIXME: make it configurable
+	return "openshift-pipelines"
+}
+func (s *OpenShiftPipelinesConfigStatus) GetManifests() []string {
+	return []string{}
+}
+
+func (s *OpenShiftPipelinesConfigStatus) GetVersion() string {
+	// FIXME: do not hardcode this
+	return "0.0.1"
+}
+func (s *OpenShiftPipelinesConfigStatus) SetVersion(string) {
 }

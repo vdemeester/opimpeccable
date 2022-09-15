@@ -3,7 +3,10 @@ module github.com/vdemeester/opimpeccable
 go 1.18
 
 require (
+	github.com/go-logr/zapr v1.2.3
 	github.com/hashicorp/golang-lru v0.5.4
+	github.com/manifestival/client-go-client v0.5.0
+	github.com/manifestival/manifestival v0.7.1
 	github.com/tektoncd/operator v0.50.1-0.20220913091305-3c9fc3ec3791
 	go.uber.org/zap v1.23.0
 	k8s.io/api v0.24.4
@@ -33,7 +36,6 @@ require (
 	github.com/go-kit/log v0.1.0 // indirect
 	github.com/go-logfmt/logfmt v0.5.0 // indirect
 	github.com/go-logr/logr v1.2.3 // indirect
-	github.com/go-logr/zapr v1.2.3 // indirect
 	github.com/go-openapi/jsonpointer v0.19.5 // indirect
 	github.com/go-openapi/jsonreference v0.19.6 // indirect
 	github.com/go-openapi/swag v0.19.15 // indirect
@@ -57,8 +59,6 @@ require (
 	github.com/json-iterator/go v1.1.12 // indirect
 	github.com/kelseyhightower/envconfig v1.4.0 // indirect
 	github.com/mailru/easyjson v0.7.7 // indirect
-	github.com/manifestival/client-go-client v0.5.0 // indirect
-	github.com/manifestival/manifestival v0.7.1 // indirect
 	github.com/markbates/inflect v1.0.4 // indirect
 	github.com/matttproud/golang_protobuf_extensions v1.0.2-0.20181231171920-c182affec369 // indirect
 	github.com/modern-go/concurrent v0.0.0-20180306012644-bacd9c7ef1dd // indirect

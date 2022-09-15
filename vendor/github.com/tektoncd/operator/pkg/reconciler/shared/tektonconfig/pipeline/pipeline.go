@@ -27,23 +27,29 @@ import (
 	"github.com/tektoncd/operator/pkg/reconciler/common"
 	apierrs "k8s.io/apimachinery/pkg/api/errors"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+	"k8s.io/apimachinery/pkg/runtime/schema"
 )
 
-func EnsureTektonPipelineExists(ctx context.Context, clients op.TektonPipelineInterface, config *v1alpha1.TektonConfig) (*v1alpha1.TektonPipeline, error) {
+type myobject interface {
+	metav1.Object
+	schema.ObjectKind
+}
+
+func EnsureTektonPipelineExists(ctx context.Context, clients op.TektonPipelineInterface, config *v1alpha1.TektonConfig, owner myobject) (*v1alpha1.TektonPipeline, error) {
 	tpCR, err := GetPipeline(ctx, clients, v1alpha1.PipelineResourceName)
 
 	if err != nil {
 		if !apierrs.IsNotFound(err) {
 			return nil, err
 		}
-		_, err = CreatePipeline(ctx, clients, config)
+		_, err = CreatePipeline(ctx, clients, config, owner)
 		if err != nil {
 			return nil, err
 		}
 		return nil, v1alpha1.RECONCILE_AGAIN_ERR
 	}
 
-	tpCR, err = UpdatePipeline(ctx, tpCR, config, clients)
+	tpCR, err = UpdatePipeline(ctx, tpCR, config, owner, clients)
 	if err != nil {
 		return nil, err
 	}
@@ -63,8 +69,8 @@ func GetPipeline(ctx context.Context, clients op.TektonPipelineInterface, name s
 	return clients.Get(ctx, name, metav1.GetOptions{})
 }
 
-func CreatePipeline(ctx context.Context, clients op.TektonPipelineInterface, config *v1alpha1.TektonConfig) (*v1alpha1.TektonPipeline, error) {
-	ownerRef := *metav1.NewControllerRef(config, config.GroupVersionKind())
+func CreatePipeline(ctx context.Context, clients op.TektonPipelineInterface, config *v1alpha1.TektonConfig, owner myobject) (*v1alpha1.TektonPipeline, error) {
+	ownerRef := *metav1.NewControllerRef(owner, owner.GroupVersionKind())
 
 	tpCR := &v1alpha1.TektonPipeline{
 		ObjectMeta: metav1.ObjectMeta{
@@ -86,7 +92,7 @@ func CreatePipeline(ctx context.Context, clients op.TektonPipelineInterface, con
 	return tpCR, err
 }
 
-func UpdatePipeline(ctx context.Context, tpCR *v1alpha1.TektonPipeline, config *v1alpha1.TektonConfig, clients op.TektonPipelineInterface) (*v1alpha1.TektonPipeline, error) {
+func UpdatePipeline(ctx context.Context, tpCR *v1alpha1.TektonPipeline, config *v1alpha1.TektonConfig, owner myobject, clients op.TektonPipelineInterface) (*v1alpha1.TektonPipeline, error) {
 	// if the pipeline spec is changed then update the instance
 	updated := false
 
@@ -106,7 +112,7 @@ func UpdatePipeline(ctx context.Context, tpCR *v1alpha1.TektonPipeline, config *
 	}
 
 	if tpCR.ObjectMeta.OwnerReferences == nil {
-		ownerRef := *metav1.NewControllerRef(config, config.GroupVersionKind())
+		ownerRef := *metav1.NewControllerRef(owner, owner.GroupVersionKind())
 		tpCR.ObjectMeta.OwnerReferences = []metav1.OwnerReference{ownerRef}
 		updated = true
 	}

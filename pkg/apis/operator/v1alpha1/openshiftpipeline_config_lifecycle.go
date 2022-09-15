@@ -56,3 +56,23 @@ func (ospcs *OpenShiftPipelinesConfigStatus) MarkNotReady(msg string) {
 		"Error",
 		"Ready: %s", msg)
 }
+
+func (ospcs *OpenShiftPipelinesConfigStatus) IsReady() bool {
+	return configCondSet.Manage(ospcs).IsHappy()
+}
+
+// To implement (or not)
+func (ospcs *OpenShiftPipelinesConfigStatus) MarkInstallSucceeded() {
+}
+func (ospcs *OpenShiftPipelinesConfigStatus) MarkInstallFailed(msg string) {
+}
+func (ospcs *OpenShiftPipelinesConfigStatus) MarkDeploymentsAvailable() {
+}
+func (ospcs *OpenShiftPipelinesConfigStatus) MarkDeploymentsNotReady() {
+}
+func (ospcs *OpenShiftPipelinesConfigStatus) MarkDependenciesInstalled() {
+}
+func (ospcs *OpenShiftPipelinesConfigStatus) MarkDependencyInstalling(msg string) {
+}
+func (ospcs *OpenShiftPipelinesConfigStatus) MarkDependencyMissing(msg string) {
+}
