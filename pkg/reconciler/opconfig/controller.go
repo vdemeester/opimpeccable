@@ -24,7 +24,10 @@ import (
 	"knative.dev/pkg/controller"
 	"knative.dev/pkg/kmeta"
 
+	// "k8s.io/client-go/tools/cache"
 	// "github.com/vdemeester/opimpeccable/pkg/apis/operator/v1alpha1"
+	upstreamoperatorclient "github.com/tektoncd/operator/pkg/client/injection/client"
+	tektonpipelineinformer "github.com/tektoncd/operator/pkg/client/injection/informers/operator/v1alpha1/tektonpipeline"
 	operatorclient "github.com/vdemeester/opimpeccable/pkg/client/injection/client"
 	openshiftpipelinesconfiginformer "github.com/vdemeester/opimpeccable/pkg/client/injection/informers/operator/v1alpha1/openshiftpipelinesconfig"
 	openshiftpipelinesconfigreconciler "github.com/vdemeester/opimpeccable/pkg/client/injection/reconciler/operator/v1alpha1/openshiftpipelinesconfig"
@@ -42,11 +45,13 @@ func NewController(
 	// the injection framework automatically. They'll keep a cached representation of the
 	// cluster's state of the respective resource at all times.
 	openshiftpipelinesconfigInformer := openshiftpipelinesconfiginformer.Get(ctx)
+	tektonpipelineInformer := tektonpipelineinformer.Get(ctx)
 
 	r := &Reconciler{
 		// The client will be needed to create/delete Pods via the API.
-		kubeclient:     kubeclient.Get(ctx),
-		operatorclient: operatorclient.Get(ctx),
+		kubeclient:           kubeclient.Get(ctx),
+		operatorclient:       operatorclient.Get(ctx),
+		tektonoperatorclient: upstreamoperatorclient.Get(ctx),
 	}
 	impl := openshiftpipelinesconfigreconciler.NewImpl(ctx, r, func(i *controller.Impl) controller.Options {
 		return controller.Options{
@@ -57,6 +62,7 @@ func NewController(
 	// Listen for events on the main resource and enqueue themselves.
 	openshiftpipelinesconfigInformer.Informer().AddEventHandler(controller.HandleAll(impl.Enqueue))
 	namespaceinformer.Get(ctx).Informer().AddEventHandler(controller.HandleAll(enqueueCustomName(impl, "config")))
+	tektonpipelineInformer.Informer().AddEventHandler(controller.HandleAll(impl.Enqueue))
 
 	return impl
 }

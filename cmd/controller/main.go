@@ -24,6 +24,7 @@ import (
 	"github.com/tektoncd/operator/pkg/reconciler/openshift/openshiftplatform"
 	"github.com/tektoncd/operator/pkg/reconciler/platform"
 	"github.com/vdemeester/opimpeccable/pkg/reconciler/opconfig"
+	"github.com/vdemeester/opimpeccable/pkg/reconciler/tektonpipeline"
 
 	// This defines the shared main for injected controllers.
 	installer "github.com/tektoncd/operator/pkg/reconciler/shared/tektoninstallerset"
@@ -37,10 +38,15 @@ func main() {
 	p := openshiftplatform.NewOpenShiftPlatform(pConfig)
 	controllers := []injection.ControllerConstructor{
 		opconfig.NewController,
+		tektonpipeline.NewController,
 	}
-	for _, c := range p.AllSupportedControllers() {
-		fmt.Println(c)
-		// controllers = append(controllers, c.ControllerConstructor)
+	for name, c := range p.AllSupportedControllers() {
+		// skip some, implemented here
+		if name == "tektonpipeline" || name == "tektonconfig" {
+			continue
+		}
+		fmt.Println(name, c)
+		controllers = append(controllers, c.ControllerConstructor)
 	}
 	cfg := injection.ParseAndGetRESTConfigOrDie()
 	cfg.QPS = 50
